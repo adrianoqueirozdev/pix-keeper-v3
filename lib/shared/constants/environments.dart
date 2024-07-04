@@ -1,6 +1,7 @@
 class Environments {
   Environments._();
 
+  static String appName = const String.fromEnvironment('APP_NAME');
   static String firebaseApiKey = const String.fromEnvironment('FIREBASE_API_KEY');
   static String firebaseAppId = const String.fromEnvironment('FIREBASE_APP_ID');
   static String firebaseMessagingSenderId = const String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID');

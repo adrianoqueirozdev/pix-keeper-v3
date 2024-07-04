@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/app_controller.dart';
 import 'package:pix_keeper/routes.dart';
+import 'package:pix_keeper/shared/constants/app_fonts.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 class App extends StatelessWidget {
@@ -31,6 +32,7 @@ class App extends StatelessWidget {
           theme: ThemeData(
             colorScheme: colorScheme,
             useMaterial3: true,
+            fontFamily: AppFontes.lexendDeca,
             appBarTheme: AppBarTheme(
               scrolledUnderElevation: 0,
               backgroundColor: isDark ? colorScheme.onSecondary : colorScheme.primary,

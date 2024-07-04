@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "575291646790",
+    "project_id": "pix-keeper-c5e4c",
+    "storage_bucket": "pix-keeper-c5e4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575291646790:android:d989fceb76372bbc84fb47",
+        "android_client_info": {
+          "package_name": "adrianoqueiroz.dev.pix_keeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575291646790-1mkkq746hq1h50uofj3ujk6khpmao84j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRzppBBoWyQXDBpMd161fJ28BdBHoJvdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575291646790-1mkkq746hq1h50uofj3ujk6khpmao84j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575291646790:android:d94bf7d1d6b91c8984fb47",
+        "android_client_info": {
+          "package_name": "adrianoqueirozdev.pix_keeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575291646790-1mkkq746hq1h50uofj3ujk6khpmao84j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRzppBBoWyQXDBpMd161fJ28BdBHoJvdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575291646790-1mkkq746hq1h50uofj3ujk6khpmao84j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

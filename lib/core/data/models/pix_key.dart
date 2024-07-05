@@ -2,14 +2,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pix_key.g.dart';
 
-enum PixKeyType { cpf, cnpj, phone, email, random }
+enum PixKeyType { none, cpf, cnpj, phone, email, random }
 
 @JsonSerializable()
 class PixKeyModel {
-  int? id;
+  String? id;
   String? name;
   String? key;
   String? pixKeyType;
+  String? pixKeyTypeLabel;
   String? favoredName;
   String? institution;
   bool? isFavorite;
@@ -23,6 +24,7 @@ class PixKeyModel {
     this.name,
     this.key,
     this.pixKeyType,
+    this.pixKeyTypeLabel,
     this.favoredName,
     this.institution,
     this.isFavorite,
@@ -33,10 +35,11 @@ class PixKeyModel {
   });
 
   PixKeyModel copyWith({
-    int? id,
+    String? id,
     String? name,
     String? key,
     String? pixKeyType,
+    String? pixKeyTypeLabel,
     String? favoredName,
     String? institution,
     bool? isFavorite,
@@ -50,6 +53,7 @@ class PixKeyModel {
       name: name ?? this.name,
       key: key ?? this.key,
       pixKeyType: pixKeyType ?? this.pixKeyType,
+      pixKeyTypeLabel: pixKeyTypeLabel ?? this.pixKeyTypeLabel,
       favoredName: favoredName ?? this.favoredName,
       institution: institution ?? this.institution,
       isFavorite: isFavorite ?? this.isFavorite,
@@ -63,4 +67,11 @@ class PixKeyModel {
   factory PixKeyModel.fromJson(Map<String, dynamic> json) => _$PixKeyModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PixKeyModelToJson(this);
+}
+
+class PixKeyTypeOption {
+  final PixKeyType? pixKeyType;
+  final String? label;
+
+  PixKeyTypeOption({this.pixKeyType, this.label});
 }

@@ -23,6 +23,7 @@ class App extends StatelessWidget {
           seedColor: Colors.deepPurple,
           brightness: controller.brightness,
         );
+
         final isDark = colorScheme.brightness == Brightness.dark;
         final TextTheme textTheme = Theme.of(context).textTheme;
 
@@ -41,6 +42,10 @@ class App extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: isDark ? colorScheme.onSurface : colorScheme.onPrimary,
               ),
+            ),
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: colorScheme.surface,
+              surfaceTintColor: colorScheme.surface,
             ),
           ),
           initialRoute: AppRoutes.splash,

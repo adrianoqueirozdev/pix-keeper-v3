@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:pix_keeper/presentation/home/home_page_controller.dart';
+import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,6 +17,10 @@ class HomePage extends StatelessWidget {
           ),
           body: const Center(
             child: Text('Home Page'),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => Get.toNamed(AppRoutes.pixKeyForm),
+            child: const Icon(Icons.add),
           ),
         );
       },

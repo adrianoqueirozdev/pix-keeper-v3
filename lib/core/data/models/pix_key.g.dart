@@ -7,10 +7,11 @@ part of 'pix_key.dart';
 // **************************************************************************
 
 PixKeyModel _$PixKeyModelFromJson(Map<String, dynamic> json) => PixKeyModel(
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as String?,
       name: json['name'] as String?,
       key: json['key'] as String?,
       pixKeyType: json['pixKeyType'] as String?,
+      pixKeyTypeLabel: json['pixKeyTypeLabel'] as String?,
       favoredName: json['favoredName'] as String?,
       institution: json['institution'] as String?,
       isFavorite: json['isFavorite'] as bool?,
@@ -26,6 +27,7 @@ Map<String, dynamic> _$PixKeyModelToJson(PixKeyModel instance) =>
       'name': instance.name,
       'key': instance.key,
       'pixKeyType': instance.pixKeyType,
+      'pixKeyTypeLabel': instance.pixKeyTypeLabel,
       'favoredName': instance.favoredName,
       'institution': instance.institution,
       'isFavorite': instance.isFavorite,

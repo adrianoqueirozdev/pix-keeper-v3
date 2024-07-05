@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/core/domain/repositories/pix_keys_repository.dart';
 
 class PixKeysRepositoryImpl implements PixKeysRepository {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
   @override
   Future<PixKeyModel> create(PixKeyModel pixKeyModel) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    await db.collection('pix_keys').doc(pixKeyModel.id).set(pixKeyModel.toJson());
+
+    return pixKeyModel;
   }
 
   @override

@@ -48,6 +48,10 @@ class App extends StatelessWidget {
               backgroundColor: colorScheme.surface,
               surfaceTintColor: colorScheme.surface,
             ),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: isDark ? colorScheme.primaryContainer : colorScheme.primary,
+              foregroundColor: isDark ? colorScheme.onPrimaryContainer : colorScheme.onPrimary,
+            ),
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
                 TargetPlatform.android: SharedAxisPageTransitionsBuilder(

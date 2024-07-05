@@ -27,7 +27,10 @@ class HomePage extends StatelessWidget {
               builder: (context, state) {
                 return switch (state.runtimeType) {
                   const (PixKeyInitialState) => const PixKeysListSkeleton(),
-                  const (PixKeyLoadedState) => PixKeysList(pixKeys: state.pixKeys),
+                  const (PixKeyLoadedState) => PixKeysList(
+                      pixKeys: state.pixKeys,
+                      onCopy: controller.onCopy,
+                    ),
                   _ => const Text("Erro"),
                 };
               },

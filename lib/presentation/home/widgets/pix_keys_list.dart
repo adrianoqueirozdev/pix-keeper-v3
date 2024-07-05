@@ -5,8 +5,9 @@ import 'package:pix_keeper/shared/controllers/copy_controller.dart';
 
 class PixKeysList extends StatelessWidget {
   final List<PixKeyModel> pixKeys;
+  final void Function(PixKeyModel pixKey)? onCopy;
 
-  const PixKeysList({super.key, required this.pixKeys});
+  const PixKeysList({super.key, required this.pixKeys, this.onCopy});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,10 @@ class PixKeysList extends StatelessWidget {
                       ],
                     ),
                     trailing: IconButton(
-                      onPressed: () => copyController.copyText(pixKey.key!),
+                      onPressed: () {
+                        copyController.copyText(pixKey.key!);
+                        onCopy?.call(pixKey);
+                      },
                       icon: Icon(
                         copyController.icon(pixKey.key!),
                       ),

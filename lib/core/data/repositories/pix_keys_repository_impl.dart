@@ -36,4 +36,9 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
     // TODO: implement update
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> copy(String id) async {
+    await db.collection('pix_keys').doc(id).update({'copiedAt': DateTime.now().toIso8601String()});
+  }
 }

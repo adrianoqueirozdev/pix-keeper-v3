@@ -18,9 +18,7 @@ class ModalBottomSheetBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final titleStyle = Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontWeight: FontWeight.w600,
-        );
+    final titleStyle = Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -5,6 +5,7 @@ import 'package:pix_keeper/app_controller.dart';
 import 'package:pix_keeper/routes.dart';
 import 'package:pix_keeper/shared/constants/app_fonts.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
+import 'package:animations/animations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -46,6 +47,13 @@ class App extends StatelessWidget {
             bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: colorScheme.surface,
               surfaceTintColor: colorScheme.surface,
+            ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+                  transitionType: SharedAxisTransitionType.horizontal,
+                ),
+              },
             ),
           ),
           initialRoute: AppRoutes.splash,

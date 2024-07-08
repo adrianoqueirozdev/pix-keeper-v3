@@ -13,6 +13,10 @@ class HomePageController extends GetxController {
     await copyPixKey.call(pixKey.id!);
   }
 
+  Future<void> onRefresh() async {
+    pixKeyBloc.add(LoadPixKeyEvent());
+  }
+
   @override
   void onInit() {
     pixKeyBloc = PixKeyBloc();

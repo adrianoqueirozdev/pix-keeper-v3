@@ -9,7 +9,6 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
   @override
   Future<PixKeyModel> create(PixKeyModel pixKeyModel) async {
     await db.collection('pix_keys').doc(pixKeyModel.id).set(pixKeyModel.toJson());
-
     return pixKeyModel;
   }
 
@@ -27,7 +26,7 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
 
   @override
   Future<List<PixKeyModel>> getAll() async {
-    QuerySnapshot query = await db.collection('pix_keys').get();
+    QuerySnapshot query = await db.collection('pix_keys').orderBy('copiedAt', descending: true).get();
     return query.docs.map((doc) => PixKeyModel.fromJson(jsonDecode(jsonEncode(doc.data())))).toList();
   }
 

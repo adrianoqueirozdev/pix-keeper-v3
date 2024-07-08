@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
                 return switch (state.runtimeType) {
                   const (PixKeyInitialState) => const PixKeysListSkeleton(),
                   const (PixKeyLoadedState) => PixKeysList(
+                      onRefresh: controller.onRefresh,
                       pixKeys: state.pixKeys,
                       onCopy: controller.onCopy,
                     ),

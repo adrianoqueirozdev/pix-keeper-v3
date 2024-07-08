@@ -6,7 +6,6 @@ import 'package:pix_keeper/presentation/home/widgets/pix_keys_list.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list_skeleton.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_state.dart';
-import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,6 +30,7 @@ class HomePage extends StatelessWidget {
                       onRefresh: controller.onRefresh,
                       pixKeys: state.pixKeys,
                       onCopy: controller.onCopy,
+                      onTap: controller.onTapDetails,
                     ),
                   _ => const Text("Erro"),
                 };
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Get.toNamed(AppRoutes.pixKeyForm),
+            onPressed: controller.onNavigateToForm,
             child: const Icon(Icons.add),
           ),
         );

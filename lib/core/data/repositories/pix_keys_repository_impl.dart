@@ -32,8 +32,8 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
 
   @override
   Future<PixKeyModel> update(PixKeyModel pixKeyModel) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    await db.collection('pix_keys').doc(pixKeyModel.id).update(pixKeyModel.toJson());
+    return pixKeyModel;
   }
 
   @override

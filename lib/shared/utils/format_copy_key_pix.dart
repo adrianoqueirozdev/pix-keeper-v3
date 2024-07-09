@@ -4,9 +4,9 @@ import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 String formatCopyKeyPix(PixKeyModel pixKey) {
   final favoredName = pixKey.favoredName;
-  final institution = pixKey.institution;
+  final institution = pixKey.institutionShortName;
   final keyPix = pixKey.key;
-  final pixKeyType = getKeyPixType(keyPix!);
+  final pixKeyType = getPixKeyType(keyPix!);
   final unmaskValue = getValueUnmask(pixKeyType, keyPix);
 
   final favoredNameStr =

@@ -1,9 +1,10 @@
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 
 abstract class PixKeyState {
-  List<PixKeyModel> pixKeys;
+  List<PixKeyModel>? pixKeys = [];
+  PixKeyModel? pixKey;
 
-  PixKeyState({required this.pixKeys});
+  PixKeyState({this.pixKeys, this.pixKey});
 }
 
 class PixKeyInitialState extends PixKeyState {
@@ -17,10 +18,17 @@ class PixKeyLoadedState extends PixKeyState {
 // -----------------------------------------------------------------------------
 // CREATE PIX KEY
 // -----------------------------------------------------------------------------
-class CreatePixKeyLoadingState extends PixKeyState {
-  CreatePixKeyLoadingState({required super.pixKeys});
-}
+class CreatePixKeyLoadingState extends PixKeyState {}
 
 class CreatePixKeySuccessState extends PixKeyState {
-  CreatePixKeySuccessState({required super.pixKeys});
+  CreatePixKeySuccessState({required super.pixKey});
+}
+
+// -----------------------------------------------------------------------------
+// UPDATE PIX KEY
+// -----------------------------------------------------------------------------
+class UpdatePixKeyLoadingState extends PixKeyState {}
+
+class UpdatePixKeySuccessState extends PixKeyState {
+  UpdatePixKeySuccessState({required super.pixKey});
 }

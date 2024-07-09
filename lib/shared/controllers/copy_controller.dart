@@ -7,37 +7,37 @@ import 'package:pix_keeper/shared/utils/get_key_pix_type.dart';
 import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 class CopyController extends GetxController {
-  final _text = ''.obs;
+  final _id = ''.obs;
 
-  String get text => _text.value;
+  String get id => _id.value;
 
-  IconData icon(String value, {isCopyAll = false}) {
-    if (value == text) {
+  IconData icon(PixKeyModel pixKey, {isCopyAll = false}) {
+    if (pixKey.id == id) {
       return Icons.check;
     } else {
       return isCopyAll ? Icons.copy_all : Icons.copy;
     }
   }
 
-  _setSelectedUid(String text) async {
-    _text(text);
+  _setSelectedId(String text) async {
+    _id(text);
     update();
 
     await Future.delayed(const Duration(seconds: 3));
-    _text('');
+    _id('');
     update();
   }
 
   void copyKeyPixAll(PixKeyModel pixKey) async {
-    _setSelectedUid(pixKey.id!.toString());
+    _setSelectedId(pixKey.id!);
     await Clipboard.setData(ClipboardData(text: formatCopyKeyPix(pixKey)));
   }
 
-  void copyText(String text) async {
-    _setSelectedUid(text);
-    final pixKeyType = getKeyPixType(text);
-    final unmaskValue = getValueUnmask(pixKeyType, text);
+  void copyText(PixKeyModel pixKey) async {
+    _setSelectedId(pixKey.id!);
+    final pixKeyType = getPixKeyType(pixKey.pixKeyType!);
+    final unmaskValue = getValueUnmask(pixKeyType, pixKey.key!);
 
-    await Clipboard.setData(ClipboardData(text: unmaskValue.replaceAll('_', '')));
+    await Clipboard.setData(ClipboardData(text: unmaskValue));
   }
 }

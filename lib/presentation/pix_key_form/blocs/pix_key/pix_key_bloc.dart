@@ -15,17 +15,21 @@ class PixKeyBloc extends Bloc<PixKeyEvents, PixKeyState> {
     final CreatePixKey createPixKey = CreatePixKey(repository: PixKeysRepositoryImpl());
     final GetAllPixKeys getAllPixKeys = GetAllPixKeys(repository: PixKeysRepositoryImpl());
 
-    List<PixKeyModel> pixKeys = state.pixKeys;
+    List<PixKeyModel> pixKeys = state.pixKeys ?? [];
 
     if (event is LoadPixKeyEvent) {
       emit(PixKeyInitialState());
       pixKeys = await getAllPixKeys.call();
     } else if (event is CreatePixKeyEvent) {
-      emit(CreatePixKeyLoadingState(pixKeys: pixKeys));
+      emit(CreatePixKeyLoadingState());
 
       final result = await createPixKey.call(event.pixKeyModel);
       pixKeys.add(result);
-      emit(CreatePixKeySuccessState(pixKeys: pixKeys));
+      emit(CreatePixKeySuccessState(pixKey: result));
+    } else if (event is UpdatePixKeyEvent) {
+      emit(UpdatePixKeyLoadingState());
+      final result = await createPixKey.call(event.pixKeyModel);
+      emit(UpdatePixKeySuccessState(pixKey: result));
     }
 
     emit(PixKeyLoadedState(pixKeys: pixKeys));

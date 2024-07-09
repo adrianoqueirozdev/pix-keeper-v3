@@ -23,7 +23,7 @@ class PixKeyDetailsPage extends StatelessWidget {
         final name = pixKey.name;
         final key = pixKey.key;
         final pixKeyTypeLabel = pixKey.pixKeyTypeLabel;
-        final institution = pixKey.institution;
+        final institution = pixKey.institutionShortName;
         final favoredName = pixKey.favoredName;
 
         return Scaffold(
@@ -73,7 +73,7 @@ class PixKeyDetailsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            onPressed: () => {},
+                            onPressed: controller.onEdit,
                             icon: const Icon(Icons.edit),
                           ),
                           IconButton(

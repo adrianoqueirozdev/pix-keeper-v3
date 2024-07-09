@@ -7,11 +7,13 @@ import 'package:pix_keeper/core/data/models/participants_pix.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_bloc.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_events.dart';
+import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_state.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_events.dart';
 import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_institution.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_pix_key_type.dart';
+import 'package:pix_keeper/shared/utils/get_key_pix_type.dart';
 import 'package:pix_keeper/shared/utils/get_key_pix_type_options.dart';
 import 'package:uuid/uuid.dart';
 
@@ -32,6 +34,8 @@ class PixKeyFormPageController extends GetxController {
 
   final _selectedKeyPixType = PixKeyTypeOption().obs;
   final _selectedParticipantPix = ParticipantPix().obs;
+  final _pixKeyEdit = PixKeyModel().obs;
+  final _isEdit = false.obs;
 
   late final ParticipantsPixBloc participantsPixBloc;
   late final PixKeyBloc pixKeyBloc;
@@ -41,6 +45,8 @@ class PixKeyFormPageController extends GetxController {
 
   PixKeyTypeOption get selectedKeyPixType => _selectedKeyPixType.value;
   ParticipantPix get selectedParticipantPix => _selectedParticipantPix.value;
+  PixKeyModel get pixKeyEdit => _pixKeyEdit.value;
+  bool get isEdit => _isEdit.value;
 
   void bottomSheetSelectedKeyPixType(BuildContext context) {
     keyPixController.clear();
@@ -143,18 +149,25 @@ class PixKeyFormPageController extends GetxController {
     if (formKey.currentState!.validate()) {
       final type = selectedKeyPixType.pixKeyType;
 
-      final pixKey = PixKeyModel()
-        ..id = const Uuid().v4()
-        ..key = keyPixController.text
-        ..pixKeyType = type!.name
-        ..pixKeyTypeLabel = selectedKeyPixType.label
-        ..name = nameController.text
-        ..favoredName = favoredNameController.text == "" ? null : favoredNameController.text
-        ..institution = selectedParticipantPix.shortName
-        ..isFavorite = false
-        ..createdAt = DateTime.now().toIso8601String();
+      final pixKey = PixKeyModel(
+        id: isEdit ? pixKeyEdit.id : const Uuid().v4(),
+        key: keyPixController.text,
+        pixKeyType: type!.name,
+        pixKeyTypeLabel: selectedKeyPixType.label,
+        name: nameController.text,
+        favoredName: favoredNameController.text,
+        institutionShortName: selectedParticipantPix.shortName,
+        institutionIspb: selectedParticipantPix.ispb,
+        isFavorite: false,
+        createdAt: isEdit ? DateTime.now().toIso8601String() : pixKeyEdit.createdAt,
+        updatedAt: isEdit ? null : DateTime.now().toIso8601String(),
+      );
 
-      pixKeyBloc.add(CreatePixKeyEvent(pixKey));
+      if (pixKeyEdit.id == null) {
+        pixKeyBloc.add(CreatePixKeyEvent(pixKey));
+      } else {
+        pixKeyBloc.add(UpdatePixKeyEvent(pixKey));
+      }
     }
   }
 
@@ -163,11 +176,42 @@ class PixKeyFormPageController extends GetxController {
     participantsPixBloc = ParticipantsPixBloc();
     pixKeyBloc = PixKeyBloc();
 
+    final arguments = Get.arguments as PixKeyModel?;
+    if (arguments != null) {
+      _pixKeyEdit.value = arguments;
+      _isEdit.value = true;
+
+      final type = getPixKeyType(arguments.pixKeyType!);
+      final pixKeyTypeOption = keyPixTypeOptions.firstWhere((element) => element.pixKeyType == type);
+      _selectedKeyPixType.value = pixKeyTypeOption;
+
+      keyPixController.text = arguments.key!;
+      nameController.text = arguments.name!;
+      favoredNameController.text = arguments.favoredName ?? '';
+
+      _setDynamicValues(pixKeyTypeOption.pixKeyType!);
+
+      update();
+    }
+
     participantsPixBloc.add(LoadParticipantsPixEvent());
+    participantsPixBloc.stream.listen((event) {
+      if (event is ParticipantsPixLoadedState) {
+        if (arguments != null) {
+          final selectedParticipantPix = participantsPixBloc.state.participantsPix
+              .firstWhere((element) => element.ispb == arguments.institutionIspb);
+          _selectedParticipantPix.value = selectedParticipantPix;
+
+          update();
+        }
+      }
+    });
 
     pixKeyBloc.stream.listen((event) {
       if (event is CreatePixKeySuccessState) {
-        Get.back();
+        Get.back(result: true);
+      } else if (event is UpdatePixKeySuccessState) {
+        Get.back(result: event.pixKey);
       }
     });
 

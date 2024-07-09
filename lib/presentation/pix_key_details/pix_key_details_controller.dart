@@ -1,6 +1,7 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
+import 'package:pix_keeper/shared/constants/app_routes.dart';
 import 'package:pix_keeper/shared/controllers/copy_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,7 +13,7 @@ class PixKeyDetailsController extends GetxController {
   PixKeyModel get pixKeyDetails => _pixKeyDetails.value;
 
   void copyAndOpenAppBank(String packageName) async {
-    copyController.copyText(pixKeyDetails.key!);
+    copyController.copyText(pixKeyDetails);
 
     final bool isInstalled = await DeviceApps.isAppInstalled(packageName);
 
@@ -24,6 +25,15 @@ class PixKeyDetailsController extends GetxController {
         mode: LaunchMode.externalNonBrowserApplication,
       );
     }
+  }
+
+  void onEdit() {
+    Get.toNamed(AppRoutes.pixKeyForm, arguments: pixKeyDetails)?.then((onValue) {
+      if (onValue != null) {
+        _pixKeyDetails.value = onValue as PixKeyModel;
+        update();
+      }
+    });
   }
 
   @override

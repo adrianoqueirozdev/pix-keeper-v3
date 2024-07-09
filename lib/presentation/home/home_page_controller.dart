@@ -20,9 +20,7 @@ class HomePageController extends GetxController {
 
   void onTapDetails(PixKeyModel pixKey) {
     Get.toNamed(AppRoutes.pixKeyDetails, arguments: pixKey)?.then((onValue) {
-      if (onValue != null) {
-        pixKeyBloc.add(LoadPixKeyEvent());
-      }
+      pixKeyBloc.add(LoadPixKeyEvent());
     });
   }
 

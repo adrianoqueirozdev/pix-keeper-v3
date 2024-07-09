@@ -76,11 +76,11 @@ class PixKeysList extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           onPressed: () {
-                            copyController.copyText(pixKey.key!);
+                            copyController.copyText(pixKey);
                             onCopy?.call(pixKey);
                           },
                           icon: Icon(
-                            copyController.icon(pixKey.key!),
+                            copyController.icon(pixKey),
                           ),
                         ),
                       ),

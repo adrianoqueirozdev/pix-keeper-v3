@@ -9,3 +9,9 @@ class CreatePixKeyEvent extends PixKeyEvents {
 
   CreatePixKeyEvent(this.pixKeyModel);
 }
+
+class UpdatePixKeyEvent extends PixKeyEvents {
+  final PixKeyModel pixKeyModel;
+
+  UpdatePixKeyEvent(this.pixKeyModel);
+}

@@ -6,14 +6,11 @@ const String tableParticipantsPix = 'participants_pix';
 
 @JsonSerializable()
 class ParticipantPix {
-  @JsonKey(name: "_id")
-  int? id;
   String? ispb;
   @JsonKey(name: "nome_reduzido")
   String? shortName;
 
   ParticipantPix({
-    this.id,
     this.ispb,
     this.shortName,
   });
@@ -24,13 +21,12 @@ class ParticipantPix {
     String? shortName,
   }) =>
       ParticipantPix(
-        id: id ?? this.id,
         ispb: ispb ?? this.ispb,
         shortName: shortName ?? this.shortName,
       );
 
   bool isEmpty() {
-    return id == null && ispb == null && shortName == null;
+    return ispb == null && shortName == null;
   }
 
   factory ParticipantPix.fromJson(Map<String, dynamic> json) => _$ParticipantPixFromJson(json);

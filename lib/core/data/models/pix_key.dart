@@ -12,7 +12,8 @@ class PixKeyModel {
   String? pixKeyType;
   String? pixKeyTypeLabel;
   String? favoredName;
-  String? institution;
+  String? institutionShortName;
+  String? institutionIspb;
   bool? isFavorite;
   String? createdAt;
   String? updatedAt;
@@ -26,7 +27,8 @@ class PixKeyModel {
     this.pixKeyType,
     this.pixKeyTypeLabel,
     this.favoredName,
-    this.institution,
+    this.institutionIspb,
+    this.institutionShortName,
     this.isFavorite,
     this.createdAt,
     this.updatedAt,
@@ -41,7 +43,8 @@ class PixKeyModel {
     String? pixKeyType,
     String? pixKeyTypeLabel,
     String? favoredName,
-    String? institution,
+    String? institutionShortName,
+    String? institutionIspb,
     bool? isFavorite,
     String? createdAt,
     String? updatedAt,
@@ -55,7 +58,8 @@ class PixKeyModel {
       pixKeyType: pixKeyType ?? this.pixKeyType,
       pixKeyTypeLabel: pixKeyTypeLabel ?? this.pixKeyTypeLabel,
       favoredName: favoredName ?? this.favoredName,
-      institution: institution ?? this.institution,
+      institutionIspb: institutionIspb ?? this.institutionIspb,
+      institutionShortName: institutionShortName ?? this.institutionShortName,
       isFavorite: isFavorite ?? this.isFavorite,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

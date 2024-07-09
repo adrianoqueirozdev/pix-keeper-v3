@@ -12,7 +12,6 @@ class PixKeyFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final colorScheme = Theme.of(context).colorScheme;
 
     return GetBuilder<PixKeyFormPageController>(
@@ -25,7 +24,22 @@ class PixKeyFormPage extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Adicionar chave'),
+                title: Text(controller.isEdit ? 'Editar chave' : 'Adicionar chave'),
+                actions: [
+                  IconButton(
+                    onPressed: isLoading ? null : controller.savePixKey,
+                    icon: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: isLoading
+                          ? CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: colorScheme.onPrimary,
+                            )
+                          : const Icon(Icons.check),
+                    ),
+                  ),
+                ],
               ),
               body: SingleChildScrollView(
                 child: Padding(
@@ -37,15 +51,15 @@ class PixKeyFormPage extends StatelessWidget {
                         CustomTextField(
                           readOnly: isLoading,
                           textInputAction: TextInputAction.next,
-                          // autofocus: controller.isUpdate
+                          autofocus: controller.isEdit,
                           validator: ValidationPixKeyForm.validateName,
-                          label: "Nome da chave *",
+                          label: "Nome da chave",
                           controller: controller.nameController,
                         ),
                         CustomTextField(
                           readOnly: true,
                           validator: (_) => ValidationPixKeyForm.validateKeyPixType(controller.selectedKeyPixType),
-                          label: "Tipo de chave *",
+                          label: "Tipo de chave",
                           hintText: controller.selectedKeyPixType.label ?? "Selecione",
                           onTap: isLoading ? null : () => controller.bottomSheetSelectedKeyPixType(context),
                           suffixIcon: const Icon(Icons.expand_more),
@@ -62,7 +76,7 @@ class PixKeyFormPage extends StatelessWidget {
                                   controller.selectedKeyPixType.pixKeyType!,
                                 ),
                                 inputFormatters: controller.inputFormatters,
-                                label: "Chave Pix *",
+                                label: "Chave Pix",
                                 controller: controller.keyPixController,
                               ),
                             ],
@@ -84,36 +98,6 @@ class PixKeyFormPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ),
-              bottomSheet: Visibility(
-                visible: !isKeyboardOpen,
-                child: Builder(
-                  builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: SizedBox(
-                        height: 56,
-                        width: double.infinity,
-                        child: Builder(builder: (context) {
-                          return FilledButton.icon(
-                            onPressed: isLoading ? null : controller.savePixKey,
-                            icon: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: isLoading
-                                  ? CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: colorScheme.onPrimary,
-                                    )
-                                  : const Icon(Icons.save),
-                            ),
-                            label: const Text("Salvar chave"),
-                          );
-                        }),
-                      ),
-                    );
-                  },
                 ),
               ),
             );

@@ -1,6 +1,8 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
+import 'package:pix_keeper/core/data/repositories/pix_keys_repository_impl.dart';
+import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 import 'package:pix_keeper/shared/controllers/copy_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,6 +11,7 @@ class PixKeyDetailsController extends GetxController {
   final _pixKeyDetails = PixKeyModel().obs;
 
   late final CopyController copyController;
+  late final CopyPixKey copyPixKey;
 
   PixKeyModel get pixKeyDetails => _pixKeyDetails.value;
 
@@ -39,6 +42,8 @@ class PixKeyDetailsController extends GetxController {
   @override
   void onInit() {
     copyController = CopyController();
+    copyPixKey = CopyPixKey(repository: PixKeysRepositoryImpl());
+
     final arguments = Get.arguments as PixKeyModel;
 
     _pixKeyDetails.value = arguments;

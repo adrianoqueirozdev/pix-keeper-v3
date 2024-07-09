@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
+import 'package:pix_keeper/core/data/repositories/pix_keys_repository_impl.dart';
+import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
 import 'package:pix_keeper/shared/utils/format_copy_key_pix.dart';
 import 'package:pix_keeper/shared/utils/get_key_pix_type.dart';
 import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 class CopyController extends GetxController {
+  late final CopyPixKey copyPixKey;
+
   final _id = ''.obs;
 
   String get id => _id.value;
@@ -38,6 +42,15 @@ class CopyController extends GetxController {
     final pixKeyType = getPixKeyType(pixKey.pixKeyType!);
     final unmaskValue = getValueUnmask(pixKeyType, pixKey.key!);
 
-    await Clipboard.setData(ClipboardData(text: unmaskValue));
+    Future.wait([
+      Clipboard.setData(ClipboardData(text: unmaskValue)),
+      copyPixKey.call(pixKey.id!),
+    ]);
+  }
+
+  @override
+  void onInit() {
+    copyPixKey = CopyPixKey(repository: PixKeysRepositoryImpl());
+    super.onInit();
   }
 }

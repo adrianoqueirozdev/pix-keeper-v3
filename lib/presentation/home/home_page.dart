@@ -29,7 +29,6 @@ class HomePage extends StatelessWidget {
                   const (PixKeyLoadedState) => PixKeysList(
                       onRefresh: controller.onRefresh,
                       pixKeys: state.pixKeys!,
-                      onCopy: controller.onCopy,
                       onTap: controller.onTapDetails,
                     ),
                   _ => const Text("Erro"),

@@ -77,8 +77,8 @@ class PixKeyDetailsPage extends StatelessWidget {
                             icon: const Icon(Icons.edit),
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.copy),
+                            onPressed: () => copyController.copyText(pixKey),
+                            icon: Icon(copyController.icon(pixKey)),
                           ),
                           IconButton(
                             onPressed: () {},

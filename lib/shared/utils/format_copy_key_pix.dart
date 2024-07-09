@@ -1,25 +1,22 @@
 import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/shared/utils/get_key_pix_type.dart';
 import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 String formatCopyKeyPix(PixKeyModel pixKey) {
-  final favoredName = pixKey.favoredName;
-  final institution = pixKey.institutionShortName;
-  final keyPix = pixKey.key;
-  final pixKeyType = getPixKeyType(keyPix!);
-  final unmaskValue = getValueUnmask(pixKeyType, keyPix);
+  String formatField(String label, String? value) {
+    return value != null && value.isNotEmpty ? "$label: ${value.toUpperCase()}\n" : "";
+  }
 
-  final favoredNameStr =
-      favoredName != null && favoredName.isNotEmpty ? "NOME DO FAVORECIDO: ${favoredName.toUpperCase()}\n" : "";
-  final institutionStr =
-      institution != null && institution.isNotEmpty ? "INSTITUIÇÃO: ${institution.toUpperCase()}\n" : "";
+  final favoredNameStr = formatField("NOME DO FAVORECIDO", pixKey.favoredName);
+  final institutionStr = formatField("INSTITUIÇÃO", pixKey.institutionShortName);
+  final unmaskValue = getValueUnmask(pixKey.pixKeyType!, pixKey.key!);
 
-  final text = "PIX KEEPER\n\n"
-      "NOME: ${pixKey.name!.toUpperCase()}\n"
-      "$favoredNameStr"
-      "$institutionStr"
-      "TIPO DE CHAVE: ${pixKey.pixKeyType!.toUpperCase()}\n"
-      "CHAVE PIX: $unmaskValue\n";
+  final text = StringBuffer()
+    ..writeln("PIX KEEPER\n")
+    ..writeln("NOME: ${pixKey.name!.toUpperCase()}")
+    ..write(favoredNameStr)
+    ..write(institutionStr)
+    ..writeln("TIPO DE CHAVE: ${pixKey.pixKeyTypeLabel!.toUpperCase()}")
+    ..writeln("CHAVE PIX: $unmaskValue");
 
-  return text;
+  return text.toString();
 }

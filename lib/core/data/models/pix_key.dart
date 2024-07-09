@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pix_key.g.dart';
 
+@JsonEnum()
 enum PixKeyType { none, cpf, cnpj, phone, email, random }
 
 @JsonSerializable()
@@ -9,7 +10,7 @@ class PixKeyModel {
   String? id;
   String? name;
   String? key;
-  String? pixKeyType;
+  PixKeyType? pixKeyType;
   String? pixKeyTypeLabel;
   String? favoredName;
   String? institutionShortName;
@@ -40,7 +41,7 @@ class PixKeyModel {
     String? id,
     String? name,
     String? key,
-    String? pixKeyType,
+    PixKeyType? pixKeyType,
     String? pixKeyTypeLabel,
     String? favoredName,
     String? institutionShortName,

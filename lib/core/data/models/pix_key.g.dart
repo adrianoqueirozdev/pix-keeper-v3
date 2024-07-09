@@ -10,7 +10,7 @@ PixKeyModel _$PixKeyModelFromJson(Map<String, dynamic> json) => PixKeyModel(
       id: json['id'] as String?,
       name: json['name'] as String?,
       key: json['key'] as String?,
-      pixKeyType: json['pixKeyType'] as String?,
+      pixKeyType: $enumDecodeNullable(_$PixKeyTypeEnumMap, json['pixKeyType']),
       pixKeyTypeLabel: json['pixKeyTypeLabel'] as String?,
       favoredName: json['favoredName'] as String?,
       institutionIspb: json['institutionIspb'] as String?,
@@ -27,7 +27,7 @@ Map<String, dynamic> _$PixKeyModelToJson(PixKeyModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'key': instance.key,
-      'pixKeyType': instance.pixKeyType,
+      'pixKeyType': _$PixKeyTypeEnumMap[instance.pixKeyType],
       'pixKeyTypeLabel': instance.pixKeyTypeLabel,
       'favoredName': instance.favoredName,
       'institutionShortName': instance.institutionShortName,
@@ -38,3 +38,12 @@ Map<String, dynamic> _$PixKeyModelToJson(PixKeyModel instance) =>
       'deletedAt': instance.deletedAt,
       'copiedAt': instance.copiedAt,
     };
+
+const _$PixKeyTypeEnumMap = {
+  PixKeyType.none: 'none',
+  PixKeyType.cpf: 'cpf',
+  PixKeyType.cnpj: 'cnpj',
+  PixKeyType.phone: 'phone',
+  PixKeyType.email: 'email',
+  PixKeyType.random: 'random',
+};

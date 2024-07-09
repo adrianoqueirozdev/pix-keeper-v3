@@ -5,7 +5,6 @@ import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/core/data/repositories/pix_keys_repository_impl.dart';
 import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
 import 'package:pix_keeper/shared/utils/format_copy_key_pix.dart';
-import 'package:pix_keeper/shared/utils/get_key_pix_type.dart';
 import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 class CopyController extends GetxController {
@@ -39,8 +38,7 @@ class CopyController extends GetxController {
 
   void copyText(PixKeyModel pixKey) async {
     _setSelectedId(pixKey.id!);
-    final pixKeyType = getPixKeyType(pixKey.pixKeyType!);
-    final unmaskValue = getValueUnmask(pixKeyType, pixKey.key!);
+    final unmaskValue = getValueUnmask(pixKey.pixKeyType!, pixKey.key!);
 
     Future.wait([
       Clipboard.setData(ClipboardData(text: unmaskValue)),

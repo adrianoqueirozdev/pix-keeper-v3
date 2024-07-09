@@ -5,7 +5,9 @@ import 'package:pix_keeper/core/data/repositories/pix_keys_repository_impl.dart'
 import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 import 'package:pix_keeper/shared/controllers/copy_controller.dart';
+import 'package:pix_keeper/shared/utils/format_copy_key_pix.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PixKeyDetailsController extends GetxController {
   final _pixKeyDetails = PixKeyModel().obs;
@@ -37,6 +39,10 @@ class PixKeyDetailsController extends GetxController {
         update();
       }
     });
+  }
+
+  void onShare() async {
+    await Share.share(formatCopyKeyPix(pixKeyDetails));
   }
 
   @override

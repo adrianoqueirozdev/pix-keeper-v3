@@ -81,7 +81,7 @@ class PixKeyDetailsPage extends StatelessWidget {
                             icon: Icon(copyController.icon(pixKey)),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: controller.onShare,
                             icon: const Icon(Icons.share),
                           ),
                           IconButton(
@@ -106,7 +106,7 @@ class PixKeyDetailsPage extends StatelessWidget {
 }
 
 class _CustomDivider extends StatelessWidget {
-  const _CustomDivider({super.key});
+  const _CustomDivider();
 
   @override
   Widget build(BuildContext context) {

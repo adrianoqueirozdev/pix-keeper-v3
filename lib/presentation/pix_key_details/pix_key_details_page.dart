@@ -6,8 +6,7 @@ import 'package:pix_keeper/presentation/pix_key_details/widgets/pix_key_qr_code.
 import 'package:pix_keeper/presentation/pix_key_details/widgets/title_detail.dart';
 import 'package:pix_keeper/shared/constants/animations.dart';
 import 'package:pix_keeper/shared/controllers/copy_controller.dart';
-import 'package:pix_keeper/shared/utils/info_of_banks_apps.dart';
-import 'package:pix_keeper/shared/widgets/bank_icon_button.dart';
+import 'package:pix_keeper/shared/widgets/banks_list.dart';
 
 class PixKeyDetailsPage extends StatelessWidget {
   const PixKeyDetailsPage({super.key});
@@ -49,25 +48,7 @@ class PixKeyDetailsPage extends StatelessWidget {
                       if (institution != null && institution.isNotEmpty)
                         TitleDetail(title: "Instituição", value: institution),
                       const _CustomDivider(),
-                      Center(
-                        child: SizedBox(
-                          width: infoOfBanksApps.length * 56,
-                          height: 64,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: infoOfBanksApps.length,
-                            itemBuilder: (context, index) {
-                              final bankInfo = infoOfBanksApps[index];
-
-                              return BankIconButton(
-                                imagePath: bankInfo.imagePath,
-                                onPressed: () => controller.copyAndOpenAppBank(bankInfo.packageName),
-                              );
-                            },
-                          ),
-                        ),
-                      ).animate().fadeIn(duration: kDurationAnimation),
+                      BanksList(pixKey: pixKey),
                       const _CustomDivider(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

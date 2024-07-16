@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_events.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
+import 'package:pix_keeper/shared/widgets/banks_list.dart';
 
 class HomePageController extends GetxController {
+  final context = Get.context!;
   late final PixKeyBloc pixKeyBloc;
 
   Future<void> onRefresh() async {
@@ -23,6 +26,23 @@ class HomePageController extends GetxController {
         pixKeyBloc.add(LoadPixKeyEvent());
       }
     });
+  }
+
+  void onShowBottomSheetBanks(PixKeyModel pixKey) {
+    showModalBottomSheet(
+      showDragHandle: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 100,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [BanksList(pixKey: pixKey)],
+          ),
+        );
+      },
+    );
   }
 
   @override

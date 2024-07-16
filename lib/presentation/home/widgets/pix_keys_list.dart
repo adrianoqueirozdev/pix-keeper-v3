@@ -8,8 +8,15 @@ class PixKeysList extends StatelessWidget {
   final List<PixKeyModel> pixKeys;
   final Future<void> Function() onRefresh;
   final void Function(PixKeyModel pixKey)? onTap;
+  final void Function(PixKeyModel pixKey)? onShowBottomSheetBanks;
 
-  const PixKeysList({super.key, required this.pixKeys, required this.onRefresh, this.onTap});
+  const PixKeysList({
+    super.key,
+    required this.pixKeys,
+    required this.onRefresh,
+    this.onTap,
+    this.onShowBottomSheetBanks,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +83,9 @@ class PixKeysList extends StatelessWidget {
                           ],
                         ),
                         trailing: IconButton(
-                          onPressed: () => copyController.copyText(pixKey),
+                          onPressed: () => copyController.copyText(pixKey).then((_) {
+                            onShowBottomSheetBanks?.call(pixKey);
+                          }),
                           icon: Icon(
                             copyController.icon(pixKey),
                           ),

@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
                       onRefresh: controller.onRefresh,
                       pixKeys: state.pixKeys!,
                       onTap: controller.onTapDetails,
+                      onShowBottomSheetBanks: controller.onShowBottomSheetBanks,
                     ),
                   _ => const Center(
                       child: Text("Erro inesperado!"),

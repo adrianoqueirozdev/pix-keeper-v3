@@ -8,6 +8,7 @@ import 'package:pix_keeper/shared/utils/format_copy_key_pix.dart';
 import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
 
 class CopyController extends GetxController {
+  final context = Get.context!;
   late final CopyPixKey copyPixKey;
 
   final _id = ''.obs;
@@ -36,11 +37,11 @@ class CopyController extends GetxController {
     await Clipboard.setData(ClipboardData(text: formatCopyKeyPix(pixKey)));
   }
 
-  void copyText(PixKeyModel pixKey) async {
+  Future<List<void>> copyText(PixKeyModel pixKey) async {
     _setSelectedId(pixKey.id!);
     final unmaskValue = getValueUnmask(pixKey.pixKeyType!, pixKey.key!);
 
-    Future.wait([
+    return Future.wait([
       Clipboard.setData(ClipboardData(text: unmaskValue)),
       copyPixKey.call(pixKey.id!),
     ]);

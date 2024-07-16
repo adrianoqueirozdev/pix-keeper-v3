@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_events.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_events.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 class HomePageController extends GetxController {

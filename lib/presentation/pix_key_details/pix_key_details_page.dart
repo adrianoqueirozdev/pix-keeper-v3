@@ -85,10 +85,10 @@ class PixKeyDetailsPage extends StatelessWidget {
                             icon: const Icon(Icons.share),
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
+                            onPressed: controller.onDeletePixKey,
+                            icon: Icon(
                               Icons.delete,
-                              color: Colors.red,
+                              color: colorScheme.error,
                             ),
                           ),
                         ].animate().fadeIn(duration: kDurationAnimation),

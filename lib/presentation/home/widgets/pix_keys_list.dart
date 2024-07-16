@@ -8,12 +8,7 @@ class PixKeysList extends StatelessWidget {
   final Future<void> Function() onRefresh;
   final void Function(PixKeyModel pixKey)? onTap;
 
-  const PixKeysList({
-    super.key,
-    required this.pixKeys,
-    required this.onRefresh,
-    this.onTap,
-  });
+  const PixKeysList({super.key, required this.pixKeys, required this.onRefresh, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +31,13 @@ class PixKeysList extends StatelessWidget {
                   GestureDetector(
                     onTap: () => onTap?.call(pixKey),
                     child: Container(
-                      padding: const EdgeInsets.only(top: 2, left: 16, right: 12, bottom: 8),
+                      padding: const EdgeInsets.only(top: 10, left: 12, right: 8, bottom: 8),
                       decoration: BoxDecoration(
                         color: colorScheme.secondaryContainer.withAlpha(98),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
+                        minVerticalPadding: 0,
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           pixKey.name!,
@@ -61,7 +57,7 @@ class PixKeysList extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(
-                              height: 12,
+                              height: 6,
                             ),
                             Text(
                               pixKey.pixKeyTypeLabel!,

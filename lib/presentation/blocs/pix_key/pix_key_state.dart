@@ -32,3 +32,10 @@ class UpdatePixKeyLoadingState extends PixKeyState {}
 class UpdatePixKeySuccessState extends PixKeyState {
   UpdatePixKeySuccessState({required super.pixKey});
 }
+
+// -----------------------------------------------------------------------------
+// DELETE PIX KEY
+// -----------------------------------------------------------------------------
+class DeletePixKeyLoadingState extends PixKeyState {}
+
+class DeletePixKeySuccessState extends PixKeyState {}

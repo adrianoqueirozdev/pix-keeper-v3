@@ -11,6 +11,7 @@ class PixKeysListSkeleton extends StatelessWidget {
       itemBuilder: (context, index) {
         return const ShimmerItem(
           height: 88,
+          borderRadius: 10,
         );
       },
     );

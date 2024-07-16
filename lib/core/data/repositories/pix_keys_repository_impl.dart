@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/core/domain/repositories/pix_keys_repository.dart';
@@ -13,9 +14,8 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
   }
 
   @override
-  Future<PixKeyModel> delete(String id) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(String id) async {
+    await db.collection('pix_keys').doc(id).update({'deletedAt': DateTime.now().toIso8601String()});
   }
 
   @override
@@ -26,7 +26,8 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
 
   @override
   Future<List<PixKeyModel>> getAll() async {
-    QuerySnapshot query = await db.collection('pix_keys').orderBy('copiedAt', descending: true).get();
+    QuerySnapshot query =
+        await db.collection('pix_keys').orderBy('copiedAt', descending: true).where('deletedAt', isNull: true).get();
     return query.docs.map((doc) => PixKeyModel.fromJson(jsonDecode(jsonEncode(doc.data())))).toList();
   }
 

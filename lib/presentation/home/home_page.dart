@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:pix_keeper/presentation/home/home_page_controller.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list_skeleton.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

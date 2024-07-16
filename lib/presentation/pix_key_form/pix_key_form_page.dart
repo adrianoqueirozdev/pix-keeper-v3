@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/presentation/pix_key_form/pix_key_form_page_controller.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/custom_text_field.dart';
 import 'package:pix_keeper/shared/validations/validation_pix_key_form.dart';

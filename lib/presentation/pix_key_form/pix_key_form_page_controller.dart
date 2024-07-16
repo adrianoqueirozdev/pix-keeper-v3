@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/participants_pix.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_events.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_state.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_events.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_events.dart';
+import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_state.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_events.dart';
+import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_institution.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_pix_key_type.dart';
 import 'package:pix_keeper/shared/utils/get_key_pix_type_options.dart';
@@ -162,9 +161,9 @@ class PixKeyFormPageController extends GetxController {
       );
 
       if (pixKeyEdit.id == null) {
-        pixKeyBloc.add(CreatePixKeyEvent(pixKey));
+        pixKeyBloc.add(CreatePixKeyEvent(pixKeyModel: pixKey));
       } else {
-        pixKeyBloc.add(UpdatePixKeyEvent(pixKey));
+        pixKeyBloc.add(UpdatePixKeyEvent(pixKeyModel: pixKey));
       }
     }
   }

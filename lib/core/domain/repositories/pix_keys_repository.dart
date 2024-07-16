@@ -9,7 +9,7 @@ abstract class PixKeysRepository {
 
   Future<PixKeyModel> update(PixKeyModel pixKeyModel);
 
-  Future<PixKeyModel> delete(String id);
+  Future<void> delete(String id);
 
   Future<void> copy(String id);
 }

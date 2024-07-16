@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_bloc.dart';
-import 'package:pix_keeper/presentation/pix_key_form/blocs/participants_pix/participants_pix_state.dart';
+import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_bloc.dart';
+import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_state.dart';
 import 'package:pix_keeper/presentation/pix_key_form/pix_key_form_page_controller.dart';
 import 'package:pix_keeper/shared/widgets/custom_icon_button.dart';
 import 'package:pix_keeper/shared/widgets/modal_bottom_sheet_base.dart';

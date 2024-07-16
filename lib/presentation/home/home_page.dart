@@ -31,7 +31,9 @@ class HomePage extends StatelessWidget {
                       pixKeys: state.pixKeys!,
                       onTap: controller.onTapDetails,
                     ),
-                  _ => const Text("Erro"),
+                  _ => const Center(
+                      child: Text("Erro inesperado!"),
+                    ),
                 };
               },
             ),

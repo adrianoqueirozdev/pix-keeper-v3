@@ -4,12 +4,7 @@ sealed class AppImages {
   static const String logoQr = 'lib/resources/images/logo-qr.png';
 
   static const String empty = 'lib/resources/images/empty.svg';
-  static const String intro1 = 'lib/resources/images/intro-1.svg';
-  static const String intro2 = 'lib/resources/images/intro-2.svg';
-  static const String intro3 = 'lib/resources/images/intro-3.svg';
   static const String error = 'lib/resources/images/error.svg';
-  static const String fingerprint = 'lib/resources/images/fingerprint.svg';
-  static const String backgroundKeysPix = 'lib/resources/images/background-keys-pix.svg';
   static const String logoDefault = 'lib/resources/images/logo-default.svg';
   static const String logoVariant = 'lib/resources/images/logo-variant.svg';
   static const String bug = 'lib/resources/images/bug.svg';

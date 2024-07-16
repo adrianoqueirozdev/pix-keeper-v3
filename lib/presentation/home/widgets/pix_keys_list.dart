@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
 import 'package:pix_keeper/shared/controllers/copy_controller.dart';
+import 'package:pix_keeper/shared/widgets/empty_state.dart';
 
 class PixKeysList extends StatelessWidget {
   final List<PixKeyModel> pixKeys;
@@ -14,6 +15,12 @@ class PixKeysList extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
+    if (pixKeys.isEmpty) {
+      return const Center(
+        child: EmptyState(description: 'Nenhuma chave encontrada'),
+      );
+    }
 
     return GetBuilder<CopyController>(
       init: CopyController(),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/presentation/profile/profile_page_controller.dart';
+import 'package:pix_keeper/presentation/profile/widgets/user_profile_info.dart';
 import 'package:pix_keeper/shared/constants/environments.dart';
-import 'package:pix_keeper/shared/widgets/profile_avatar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -12,7 +12,6 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final isDarkMode = colorScheme.brightness == Brightness.dark;
     final size = MediaQuery.of(context).size;
 
     return GetBuilder<ProfilePageController>(
@@ -36,36 +35,7 @@ class ProfilePage extends StatelessWidget {
               child: SizedBox(
                 height: 190,
                 width: size.width,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (user != null)
-                      ...[
-                        Center(
-                          child: ProfileAvatar(
-                            borderColor: isDarkMode ? colorScheme.onSurface : colorScheme.surface,
-                            size: 100,
-                            imageUrl: user.photoURL!,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "${user.displayName}",
-                          style: textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "${user.email}",
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                      ].animate().fade(duration: 200.ms),
-                  ],
-                ),
+                child: UserProfileInfo(user: user!),
               ),
             ),
           ),

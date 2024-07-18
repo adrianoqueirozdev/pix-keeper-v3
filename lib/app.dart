@@ -33,8 +33,8 @@ class App extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             colorScheme: colorScheme,
+            fontFamily: AppFontes.lexendDeca,
             useMaterial3: true,
-            scaffoldBackgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
             textTheme: textTheme.apply(
               fontSizeFactor: 1.05,
               fontSizeDelta: 1.0,
@@ -42,13 +42,9 @@ class App extends StatelessWidget {
               bodyColor: colorScheme.onSurface,
             ),
             appBarTheme: AppBarTheme(
+              backgroundColor: colorScheme.surface,
+              foregroundColor: colorScheme.onSurface,
               scrolledUnderElevation: 0,
-              backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
-              foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
-              titleTextStyle: textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
-              ),
             ),
             tooltipTheme: TooltipThemeData(
               margin: const EdgeInsets.symmetric(horizontal: 12),

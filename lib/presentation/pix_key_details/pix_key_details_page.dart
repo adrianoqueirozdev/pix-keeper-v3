@@ -26,11 +26,7 @@ class PixKeyDetailsPage extends StatelessWidget {
         final favoredName = pixKey.favoredName;
 
         return Scaffold(
-          backgroundColor: colorScheme.surface,
-          appBar: AppBar(
-            backgroundColor: colorScheme.surface,
-            foregroundColor: colorScheme.onSurface,
-          ),
+          appBar: AppBar(),
           body: GetBuilder<CopyController>(
             init: CopyController(),
             builder: (copyController) {

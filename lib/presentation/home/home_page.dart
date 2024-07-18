@@ -8,9 +8,9 @@ import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/presentation/home/home_page_controller.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list_skeleton.dart';
-import 'package:pix_keeper/shared/widgets/profile_avatar.dart';
 import 'package:pix_keeper/shared/constants/animations.dart';
 import 'package:pix_keeper/shared/constants/app_images.dart';
+import 'package:pix_keeper/shared/widgets/profile_avatar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,7 +27,10 @@ class HomePage extends StatelessWidget {
         final userPhotoUrl = controller.user?.photoURL;
 
         return Scaffold(
+          backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
           appBar: AppBar(
+            backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
+            foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
             toolbarHeight: 72,
             leadingWidth: 52,
             leading: Padding(
@@ -46,7 +49,11 @@ class HomePage extends StatelessWidget {
             ),
             actions: [
               if (userPhotoUrl != null) ...[
-                ProfileAvatar(imageUrl: userPhotoUrl),
+                InkWell(
+                  borderRadius: BorderRadius.circular(100),
+                  onTap: controller.onNavigateToProfile,
+                  child: ProfileAvatar(imageUrl: userPhotoUrl),
+                ),
                 const SizedBox(width: 12),
               ]
             ],

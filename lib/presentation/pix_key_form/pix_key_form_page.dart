@@ -12,8 +12,6 @@ class PixKeyFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return GetBuilder<PixKeyFormPageController>(
       init: PixKeyFormPageController(),
       builder: (controller) {
@@ -23,15 +21,9 @@ class PixKeyFormPage extends StatelessWidget {
             final isLoading = state is CreatePixKeyLoadingState;
 
             return Scaffold(
-              backgroundColor: colorScheme.surface,
               appBar: AppBar(
-                backgroundColor: colorScheme.surface,
-                foregroundColor: colorScheme.onSurface,
                 title: Text(
                   controller.isEdit ? 'Editar chave' : 'Adicionar chave',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: colorScheme.onSurface,
-                      ),
                 ),
                 actions: [
                   IconButton(

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class ProfileAvatar extends StatelessWidget {
   final double size;
   final String imageUrl;
+  final Color? borderColor;
 
-  const ProfileAvatar({super.key, required this.imageUrl, this.size = 40});
+  const ProfileAvatar({super.key, required this.imageUrl, this.size = 40, this.borderColor});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ProfileAvatar extends StatelessWidget {
 
     return ClipOval(
       child: Container(
-        color: isDarkMode ? colorScheme.onSurface : colorScheme.surface,
+        color: borderColor ?? (isDarkMode ? colorScheme.onSurface : colorScheme.surface),
         width: size,
         height: size,
         padding: const EdgeInsets.all(2),

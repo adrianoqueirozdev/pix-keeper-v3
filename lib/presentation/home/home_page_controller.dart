@@ -31,6 +31,10 @@ class HomePageController extends GetxController {
     });
   }
 
+  void onNavigateToProfile() {
+    Get.toNamed(AppRoutes.profile);
+  }
+
   void onShowBottomSheetBanks(PixKeyModel pixKey) {
     showModalBottomSheet(
       showDragHandle: true,

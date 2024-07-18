@@ -10,14 +10,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorSchema = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = colorScheme.brightness == Brightness.dark;
     final size = MediaQuery.of(context).size;
 
     return GetBuilder<LoginPageController>(
       init: LoginPageController(),
       builder: (controller) {
         return Scaffold(
+          backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
           appBar: AppBar(
+            backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
+            foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
             centerTitle: true,
             toolbarHeight: size.height * 0.4,
             title: SvgPicture.asset(
@@ -28,7 +32,7 @@ class LoginPage extends StatelessWidget {
           body: Container(
             width: size.width,
             decoration: BoxDecoration(
-              color: colorSchema.surface,
+              color: colorScheme.surface,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             ),
             child: Padding(

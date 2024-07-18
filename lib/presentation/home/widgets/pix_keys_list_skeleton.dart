@@ -7,7 +7,7 @@ class PixKeysListSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      itemCount: 5,
       itemBuilder: (context, index) {
         return const ShimmerItem(
           height: 84,

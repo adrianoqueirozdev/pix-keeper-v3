@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key.dart';
@@ -8,6 +9,8 @@ import 'package:pix_keeper/shared/widgets/banks_list.dart';
 
 class HomePageController extends GetxController {
   final context = Get.context!;
+  final user = FirebaseAuth.instance.currentUser;
+
   late final PixKeyBloc pixKeyBloc;
 
   Future<void> onRefresh() async {

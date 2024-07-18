@@ -25,7 +25,7 @@ class App extends StatelessWidget {
           brightness: controller.brightness,
         );
 
-        final isDark = colorScheme.brightness == Brightness.dark;
+        final isDarkMode = colorScheme.brightness == Brightness.dark;
         final TextTheme textTheme = Theme.of(context).textTheme;
 
         return GetMaterialApp(
@@ -34,14 +34,27 @@ class App extends StatelessWidget {
           theme: ThemeData(
             colorScheme: colorScheme,
             useMaterial3: true,
-            fontFamily: AppFontes.lexendDeca,
+            scaffoldBackgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
+            textTheme: textTheme.apply(
+              fontSizeFactor: 1.05,
+              fontSizeDelta: 1.0,
+              fontFamily: AppFontes.lexendDeca,
+              bodyColor: colorScheme.onSurface,
+            ),
             appBarTheme: AppBarTheme(
               scrolledUnderElevation: 0,
-              backgroundColor: isDark ? colorScheme.onSecondary : colorScheme.primary,
-              foregroundColor: isDark ? colorScheme.onSurface : colorScheme.onPrimary,
+              backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
+              foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
               titleTextStyle: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: isDark ? colorScheme.onSurface : colorScheme.onPrimary,
+                color: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
+              ),
+            ),
+            tooltipTheme: TooltipThemeData(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.onSurface,
+                borderRadius: BorderRadius.circular(4),
               ),
             ),
             bottomSheetTheme: BottomSheetThemeData(
@@ -49,8 +62,8 @@ class App extends StatelessWidget {
               surfaceTintColor: colorScheme.surface,
             ),
             floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: isDark ? colorScheme.primaryContainer : colorScheme.primary,
-              foregroundColor: isDark ? colorScheme.onPrimaryContainer : colorScheme.onPrimary,
+              backgroundColor: isDarkMode ? colorScheme.primaryContainer : colorScheme.primary,
+              foregroundColor: isDarkMode ? colorScheme.onPrimaryContainer : colorScheme.onPrimary,
             ),
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {

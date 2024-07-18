@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart'; // Certifique-se de ter o pacote flutter_animate instalado
+import 'package:flutter_animate/flutter_animate.dart';
 
 class TitleDetail extends StatelessWidget {
   final String title;
@@ -7,7 +7,6 @@ class TitleDetail extends StatelessWidget {
   final TextStyle? titleStyle;
   final TextStyle? nameStyle;
   final Color? titleColor;
-  final Duration animationDuration;
   final double spacing;
 
   const TitleDetail({
@@ -17,8 +16,7 @@ class TitleDetail extends StatelessWidget {
     this.titleStyle,
     this.nameStyle,
     this.titleColor,
-    this.animationDuration = const Duration(milliseconds: 300),
-    this.spacing = 6.0,
+    this.spacing = 8.0,
   });
 
   @override
@@ -36,12 +34,15 @@ class TitleDetail extends StatelessWidget {
                 color: titleColor ?? colorScheme.secondary,
               ),
         ),
-        Text(
-          value,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: nameStyle ?? textTheme.bodyMedium,
-        ).animate().fadeIn(duration: animationDuration),
+        Tooltip(
+          message: value,
+          child: Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: nameStyle ?? textTheme.bodyMedium,
+          ).animate().fadeIn(duration: 300.ms),
+        ),
         SizedBox(
           height: spacing,
         ),

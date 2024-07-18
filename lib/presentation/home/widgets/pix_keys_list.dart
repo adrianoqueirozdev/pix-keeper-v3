@@ -83,9 +83,7 @@ class PixKeysList extends StatelessWidget {
                           ],
                         ),
                         trailing: IconButton(
-                          onPressed: () => copyController.copyText(pixKey).then((_) {
-                            onShowBottomSheetBanks?.call(pixKey);
-                          }),
+                          onPressed: () => onShowBottomSheetBanks?.call(pixKey),
                           icon: Icon(
                             copyController.icon(pixKey),
                           ),

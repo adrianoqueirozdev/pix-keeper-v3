@@ -24,19 +24,28 @@ class PixKeyQrCode extends StatelessWidget {
             width: isDarkMode ? 0 : 1,
           ),
         ),
+        width: 180,
+        height: 180,
         child: QrImageView(
           data: text,
-          version: QrVersions.auto,
           errorCorrectionLevel: QrErrorCorrectLevel.H,
-          size: 180,
+          version: QrVersions.auto,
+          eyeStyle: QrEyeStyle(
+            eyeShape: QrEyeShape.square,
+            color: isDarkMode ? colorScheme.surface : colorScheme.onSurface,
+          ),
           embeddedImage: const AssetImage(
             AppImages.logoQr,
           ),
           embeddedImageStyle: const QrEmbeddedImageStyle(
             size: Size(40, 40),
           ),
-        ),
+          dataModuleStyle: QrDataModuleStyle(
+            dataModuleShape: QrDataModuleShape.square,
+            color: isDarkMode ? colorScheme.surface : colorScheme.onSurface,
+          ),
+        ).animate().fadeIn(duration: kDurationAnimation),
       ),
-    ).animate().fadeIn(duration: kDurationAnimation);
+    );
   }
 }

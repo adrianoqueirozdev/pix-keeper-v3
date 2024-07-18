@@ -20,12 +20,13 @@ class PixKeyDetailsPage extends StatelessWidget {
       builder: (controller) {
         final pixKey = controller.pixKeyDetails;
         final name = pixKey.name;
-        final key = pixKey.key;
+        final key = pixKey.key!;
         final pixKeyTypeLabel = pixKey.pixKeyTypeLabel;
         final institution = pixKey.institutionShortName;
         final favoredName = pixKey.favoredName;
 
         return Scaffold(
+          backgroundColor: colorScheme.surface,
           appBar: AppBar(
             backgroundColor: colorScheme.surface,
             foregroundColor: colorScheme.onSurface,
@@ -35,14 +36,14 @@ class PixKeyDetailsPage extends StatelessWidget {
             builder: (copyController) {
               return SingleChildScrollView(
                 child: Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(12),
                   child: Column(
                     children: [
-                      PixKeyQrCode(text: '$key'),
+                      PixKeyQrCode(text: key),
                       const SizedBox(height: 16),
                       TitleDetail(title: "Nome", value: '$name'),
                       TitleDetail(title: "Tipo", value: '$pixKeyTypeLabel'),
-                      TitleDetail(title: "Chave pix", value: '$key'),
+                      TitleDetail(title: "Chave pix", value: key),
                       if (favoredName != null && favoredName.isNotEmpty)
                         TitleDetail(title: "Nome do favorecido", value: favoredName),
                       if (institution != null && institution.isNotEmpty)

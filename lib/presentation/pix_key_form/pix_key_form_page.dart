@@ -23,27 +23,30 @@ class PixKeyFormPage extends StatelessWidget {
             final isLoading = state is CreatePixKeyLoadingState;
 
             return Scaffold(
+              backgroundColor: colorScheme.surface,
               appBar: AppBar(
-                title: Text(controller.isEdit ? 'Editar chave' : 'Adicionar chave'),
+                backgroundColor: colorScheme.surface,
+                foregroundColor: colorScheme.onSurface,
+                title: Text(
+                  controller.isEdit ? 'Editar chave' : 'Adicionar chave',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: colorScheme.onSurface,
+                      ),
+                ),
                 actions: [
                   IconButton(
                     onPressed: isLoading ? null : controller.savePixKey,
                     icon: SizedBox(
                       width: 24,
                       height: 24,
-                      child: isLoading
-                          ? CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: colorScheme.onPrimary,
-                            )
-                          : const Icon(Icons.check),
+                      child: isLoading ? const CircularProgressIndicator(strokeWidth: 2) : const Icon(Icons.check),
                     ),
                   ),
                 ],
               ),
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(12),
                   child: Form(
                     key: controller.formKey,
                     child: Column(
@@ -62,7 +65,10 @@ class PixKeyFormPage extends StatelessWidget {
                           label: "Tipo de chave",
                           hintText: controller.selectedKeyPixType.label ?? "Selecione",
                           onTap: isLoading ? null : () => controller.bottomSheetSelectedKeyPixType(context),
-                          suffixIcon: const Icon(Icons.expand_more),
+                          suffixIcon: const Icon(
+                            Icons.expand_more,
+                            size: 28,
+                          ),
                         ),
                         Visibility(
                           visible: controller.isEnabledInputKeyPix,
@@ -93,7 +99,10 @@ class PixKeyFormPage extends StatelessWidget {
                           label: "Instituição",
                           hintText: controller.selectedParticipantPix.shortName ?? "Selecione",
                           onTap: isLoading ? null : () => controller.bottomSheetSelectedParticipantPix(context),
-                          suffixIcon: const Icon(Icons.expand_more),
+                          suffixIcon: const Icon(
+                            Icons.expand_more,
+                            size: 28,
+                          ),
                         ),
                       ],
                     ),

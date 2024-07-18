@@ -19,18 +19,22 @@ class BanksList extends StatelessWidget {
       builder: (controller) {
         return Center(
           child: SizedBox(
-            width: infoOfBanksApps.length * 56,
-            height: 64,
+            width: infoOfBanksApps.length * 72,
+            height: 72,
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 8),
               scrollDirection: Axis.horizontal,
               itemCount: infoOfBanksApps.length,
               itemBuilder: (context, index) {
                 final bankInfo = infoOfBanksApps[index];
 
-                return BankIconButton(
-                  imagePath: bankInfo.imagePath,
-                  onPressed: () => controller.copyAndOpenAppBank(bankInfo.packageName, pixKey),
+                return Container(
+                  width: 72,
+                  height: 72,
+                  padding: const EdgeInsets.all(4),
+                  child: BankIconButton(
+                    imagePath: bankInfo.imagePath,
+                    onPressed: () => controller.copyAndOpenAppBank(bankInfo.packageName, pixKey),
+                  ),
                 );
               },
             ),

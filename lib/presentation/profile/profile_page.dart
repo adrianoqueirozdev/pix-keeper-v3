@@ -88,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                 const Divider(),
                 ListTile(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  onTap: () {},
+                  onTap: controller.onOpenAppSettings,
                   leading: const Icon(Icons.settings),
                   title: const Text("Configurações"),
                   style: ListTileStyle.drawer,

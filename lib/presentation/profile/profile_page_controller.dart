@@ -1,6 +1,11 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ProfilePageController extends GetxController {
   final User? user = FirebaseAuth.instance.currentUser;
+
+  void onOpenAppSettings() async {
+    await AppSettings.openAppSettings();
+  }
 }

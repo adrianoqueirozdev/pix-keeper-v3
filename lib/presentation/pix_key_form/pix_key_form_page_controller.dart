@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ const int _kDebounceTime = 1000;
 class PixKeyFormPageController extends GetxController {
   final List<PixKeyTypeOption> keyPixTypeOptions = getKeyPixTypeOptions();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final User? user = FirebaseAuth.instance.currentUser;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController keyPixController = TextEditingController();
@@ -152,11 +154,12 @@ class PixKeyFormPageController extends GetxController {
         pixKeyType: selectedKeyPixType.pixKeyType,
         pixKeyTypeLabel: selectedKeyPixType.label,
         name: nameController.text,
-        favoredName: favoredNameController.text,
+        favoredName: favoredNameController.text.isEmpty ? null : favoredNameController.text,
         institutionShortName: selectedParticipantPix.shortName,
         institutionIspb: selectedParticipantPix.ispb,
         isFavorite: false,
-        createdAt: isEdit ? DateTime.now().toIso8601String() : pixKeyEdit.createdAt,
+        userId: user?.uid,
+        createdAt: isEdit ? pixKeyEdit.createdAt : DateTime.now().toIso8601String(),
         updatedAt: isEdit ? null : DateTime.now().toIso8601String(),
       );
 

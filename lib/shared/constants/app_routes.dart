@@ -7,4 +7,5 @@ class AppRoutes {
   static const String pixKeyForm = '/pix-key-form';
   static const String pixKeyDetails = '/pix-key-details';
   static const String profile = '/profile';
+  static const String trashCan = '/trash-can';
 }

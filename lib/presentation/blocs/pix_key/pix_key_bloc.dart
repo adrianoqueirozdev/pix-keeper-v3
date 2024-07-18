@@ -13,9 +13,11 @@ class PixKeyBloc extends Bloc<PixKeyEvents, PixKeyState> {
   }
 
   void _mapEventToState(PixKeyEvents event, Emitter emit) async {
-    final CreatePixKey createPixKey = CreatePixKey(repository: PixKeysRepositoryImpl());
-    final GetAllPixKeys getAllPixKeys = GetAllPixKeys(repository: PixKeysRepositoryImpl());
-    final DeletePixKey deletePixKey = DeletePixKey(repository: PixKeysRepositoryImpl());
+    final pixKeyRepository = PixKeysRepositoryImpl();
+
+    final CreatePixKey createPixKey = CreatePixKey(repository: pixKeyRepository);
+    final GetAllPixKeys getAllPixKeys = GetAllPixKeys(repository: pixKeyRepository);
+    final DeletePixKey deletePixKey = DeletePixKey(repository: pixKeyRepository);
 
     List<PixKeyModel> pixKeys = state.pixKeys ?? [];
 

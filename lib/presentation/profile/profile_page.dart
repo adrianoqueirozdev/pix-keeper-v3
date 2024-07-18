@@ -49,9 +49,9 @@ class ProfilePage extends StatelessWidget {
               children: [
                 ListTile(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  onTap: () {},
+                  onTap: controller.onNavigateToTrashCan,
                   leading: const Icon(Icons.delete_sweep),
-                  title: const Text("Chaves apagadas"),
+                  title: const Text("Lixeira"),
                   style: ListTileStyle.drawer,
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 ),

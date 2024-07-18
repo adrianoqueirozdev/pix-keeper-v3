@@ -32,7 +32,7 @@ class HomePageController extends GetxController {
   }
 
   void onNavigateToProfile() {
-    Get.toNamed(AppRoutes.profile);
+    Get.toNamed(AppRoutes.profile, arguments: pixKeyBloc);
   }
 
   void onShowBottomSheetBanks(PixKeyModel pixKey) {
@@ -45,7 +45,9 @@ class HomePageController extends GetxController {
           height: 100,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            children: [BanksList(pixKey: pixKey)],
+            children: [
+              BanksList(pixKey: pixKey),
+            ],
           ),
         );
       },

@@ -7,7 +7,7 @@ import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/presentation/home/home_page_controller.dart';
 import 'package:pix_keeper/presentation/home/widgets/pix_keys_list.dart';
-import 'package:pix_keeper/presentation/home/widgets/pix_keys_list_skeleton.dart';
+import 'package:pix_keeper/shared/widgets/pix_keys_list_skeleton.dart';
 import 'package:pix_keeper/shared/constants/animations.dart';
 import 'package:pix_keeper/shared/constants/app_images.dart';
 import 'package:pix_keeper/shared/widgets/profile_avatar.dart';

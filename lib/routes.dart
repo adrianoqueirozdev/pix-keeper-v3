@@ -5,6 +5,7 @@ import 'package:pix_keeper/presentation/pix_key_details/pix_key_details_page.dar
 import 'package:pix_keeper/presentation/pix_key_form/pix_key_form_page.dart';
 import 'package:pix_keeper/presentation/profile/profile_page.dart';
 import 'package:pix_keeper/presentation/splash/splash_page.dart';
+import 'package:pix_keeper/presentation/trash_can/trash_can_page.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 Map<String, Widget Function(BuildContext context)> getRoutes() {
@@ -15,5 +16,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes() {
     AppRoutes.pixKeyForm: (_) => const PixKeyFormPage(),
     AppRoutes.pixKeyDetails: (_) => const PixKeyDetailsPage(),
     AppRoutes.profile: (_) => const ProfilePage(),
+    AppRoutes.trashCan: (_) => const TrashCanPage(),
   };
 }

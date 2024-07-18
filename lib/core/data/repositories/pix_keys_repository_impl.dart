@@ -41,4 +41,16 @@ class PixKeysRepositoryImpl implements PixKeysRepository {
   Future<void> copy(String id) async {
     await db.collection('pix_keys').doc(id).update({'copiedAt': DateTime.now().toIso8601String()});
   }
+
+  @override
+  Future<List<PixKeyModel>> getAllDeleted() async {
+    QuerySnapshot query =
+        await db.collection('pix_keys').orderBy('deletedAt', descending: true).where('deletedAt', isNull: false).get();
+    return query.docs.map((doc) => PixKeyModel.fromJson(jsonDecode(jsonEncode(doc.data())))).toList();
+  }
+
+  @override
+  Future<void> restore(String id) async {
+    await db.collection('pix_keys').doc(id).update({'deletedAt': null});
+  }
 }

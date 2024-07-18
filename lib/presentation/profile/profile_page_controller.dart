@@ -15,4 +15,8 @@ class ProfilePageController extends GetxController {
     final pixKeyBloc = Get.arguments as PixKeyBloc;
     Get.toNamed(AppRoutes.trashCan, arguments: pixKeyBloc);
   }
+
+  void onLogout() async {
+    await FirebaseAuth.instance.signOut().then((_) => Get.offAllNamed(AppRoutes.login));
+  }
 }

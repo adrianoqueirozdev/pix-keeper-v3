@@ -5,6 +5,22 @@ part 'pix_key.g.dart';
 @JsonEnum()
 enum PixKeyType { none, cpf, cnpj, phone, email, random }
 
+class PixKeysFields {
+  static const String id = "id";
+  static const String name = "name";
+  static const String key = "key";
+  static const String pixKeyType = "pixKeyType";
+  static const String favoredName = "favoredName";
+  static const String institutionShortName = "institutionShortName";
+  static const String institutionIspb = "institutionIspb";
+  static const String isFavorite = "isFavorite";
+  static const String userId = "userId";
+  static const String createdAt = "createdAt";
+  static const String updatedAt = "updatedAt";
+  static const String deletedAt = "deletedAt";
+  static const String copiedAt = "copiedAt";
+}
+
 @JsonSerializable()
 class PixKeyModel {
   String? id;

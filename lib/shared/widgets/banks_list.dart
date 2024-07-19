@@ -19,8 +19,8 @@ class BanksList extends StatelessWidget {
       builder: (controller) {
         return Center(
           child: SizedBox(
-            width: infoOfBanksApps.length * 72,
-            height: 72,
+            width: infoOfBanksApps.length * 64,
+            height: 64,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: infoOfBanksApps.length,
@@ -28,8 +28,8 @@ class BanksList extends StatelessWidget {
                 final bankInfo = infoOfBanksApps[index];
 
                 return Container(
-                  width: 72,
-                  height: 72,
+                  width: 64,
+                  height: 64,
                   padding: const EdgeInsets.all(4),
                   child: BankIconButton(
                     imagePath: bankInfo.imagePath,

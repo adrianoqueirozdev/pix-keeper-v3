@@ -28,7 +28,7 @@ class SelectPixKeyType extends StatelessWidget {
                     value: controller.keyPixTypeOptions[index],
                     title: Text(
                       controller.keyPixTypeOptions[index].label!,
-                      style: textTheme.bodyMedium,
+                      style: textTheme.bodyLarge,
                     ),
                     groupValue: controller.selectedKeyPixType,
                     selected: controller.keyPixTypeOptions[index] == controller.selectedKeyPixType,

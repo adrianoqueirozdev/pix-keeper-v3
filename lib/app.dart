@@ -53,6 +53,11 @@ class App extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
+            filledButtonTheme: FilledButtonThemeData(
+                style: FilledButton.styleFrom(
+              backgroundColor: isDarkMode ? colorScheme.primaryContainer : colorScheme.primary,
+              foregroundColor: isDarkMode ? colorScheme.onPrimaryContainer : colorScheme.onPrimary,
+            )),
             bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: colorScheme.surface,
               surfaceTintColor: colorScheme.surface,

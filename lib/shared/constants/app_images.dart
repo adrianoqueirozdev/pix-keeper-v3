@@ -6,6 +6,7 @@ sealed class AppImages {
   static const String empty = 'lib/resources/images/empty.svg';
   static const String error = 'lib/resources/images/error.svg';
   static const String logoDefault = 'lib/resources/images/logo-default.svg';
+  static const String logoVariant = 'lib/resources/images/logo-variant.svg';
   static const String bug = 'lib/resources/images/bug.svg';
 
   static const String caixa = 'lib/resources/images/caixa.png';

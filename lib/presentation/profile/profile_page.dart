@@ -13,6 +13,7 @@ class ProfilePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final isDarkMode = colorScheme.brightness == Brightness.dark;
 
     return GetBuilder<ProfilePageController>(
       init: ProfilePageController(),
@@ -20,10 +21,10 @@ class ProfilePage extends StatelessWidget {
         final user = controller.user;
 
         return Scaffold(
-          backgroundColor: colorScheme.surfaceContainerLow,
+          backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
           appBar: AppBar(
-            backgroundColor: colorScheme.surfaceContainerLow,
-            foregroundColor: colorScheme.onSurface,
+            backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
+            foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
             actions: [
               IconButton(
                 onPressed: controller.onLogout,
@@ -55,7 +56,9 @@ class ProfilePage extends StatelessWidget {
                   style: ListTileStyle.drawer,
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
-                const Divider(),
+                const Divider(
+                  thickness: 0.5,
+                ),
                 ListTile(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   onTap: controller.onOpenAppSettings,
@@ -71,7 +74,7 @@ class ProfilePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
               "v${Environments.appVersion}",
-              style: textTheme.bodySmall?.copyWith(
+              style: textTheme.titleSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),

@@ -198,10 +198,12 @@ class PixKeyFormPageController extends GetxController {
       if (event is ParticipantsPixLoadedState) {
         if (arguments != null) {
           final selectedParticipantPix = participantsPixBloc.state.participantsPix
-              .firstWhere((element) => element.ispb == arguments.institutionIspb);
-          _selectedParticipantPix.value = selectedParticipantPix;
+              .firstWhereOrNull((element) => element.ispb == arguments.institutionIspb);
 
-          update();
+          if (selectedParticipantPix != null) {
+            _selectedParticipantPix.value = selectedParticipantPix;
+            update();
+          }
         }
       }
     });

@@ -30,7 +30,7 @@ class TitleDetail extends StatelessWidget {
         Text(
           title,
           style: titleStyle ??
-              textTheme.bodySmall?.copyWith(
+              textTheme.bodyMedium?.copyWith(
                 color: titleColor ?? colorScheme.secondary,
               ),
         ),
@@ -40,7 +40,7 @@ class TitleDetail extends StatelessWidget {
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: nameStyle ?? textTheme.bodyMedium,
+            style: nameStyle ?? textTheme.bodyLarge,
           ).animate().fadeIn(duration: 300.ms),
         ),
         SizedBox(

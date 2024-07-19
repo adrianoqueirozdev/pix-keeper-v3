@@ -29,13 +29,14 @@ class UserProfileInfo extends StatelessWidget {
           "${user.displayName}",
           style: textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w600,
+            color: isDarkMode ? colorScheme.onSurface : colorScheme.surface,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           "${user.email}",
           style: textTheme.bodyMedium?.copyWith(
-            color: colorScheme.onSurfaceVariant,
+            color: isDarkMode ? colorScheme.onSurfaceVariant : colorScheme.surface,
           ),
         ),
         const SizedBox(height: 12),

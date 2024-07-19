@@ -89,13 +89,13 @@ class SelectedInstitution extends StatelessWidget {
                           children: [
                             Text(
                               list[index].shortName!,
-                              style: textTheme.bodyMedium,
+                              style: textTheme.bodyLarge,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               list[index].ispb!,
-                              style: textTheme.bodySmall?.copyWith(
+                              style: textTheme.bodyMedium?.copyWith(
                                 color: colorScheme.secondary,
                               ),
                               maxLines: 1,

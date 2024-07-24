@@ -14,7 +14,6 @@ class ParticipantPixModel {
   });
 
   ParticipantPixModel copy({
-    int? id,
     String? ispb,
     String? shortName,
   }) =>

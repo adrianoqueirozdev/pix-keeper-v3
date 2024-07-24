@@ -1,11 +1,14 @@
-sealed class Environments {
-  static String brasilApiUrl = const String.fromEnvironment('BRASIL_API_BASE_URL');
+import 'package:pix_keeper/shared/constants/environment_variable_names.dart';
 
-  static String appName = const String.fromEnvironment('APP_NAME');
-  static String appVersion = const String.fromEnvironment('APP_VERSION');
-  static String firebaseApiKey = const String.fromEnvironment('FIREBASE_API_KEY');
-  static String firebaseAppId = const String.fromEnvironment('FIREBASE_APP_ID');
-  static String firebaseMessagingSenderId = const String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID');
+sealed class Environments {
+  static String brasilApiUrl = const String.fromEnvironment(EnvironmentVariableNames.brasilApiUrl);
+
+  static String appName = const String.fromEnvironment(EnvironmentVariableNames.appName);
+  static String appVersion = const String.fromEnvironment(EnvironmentVariableNames.appVersion);
+  static String firebaseApiKey = const String.fromEnvironment(EnvironmentVariableNames.firebaseApiKey);
+  static String firebaseAppId = const String.fromEnvironment(EnvironmentVariableNames.firebaseAppId);
+  static String firebaseMessagingSenderId =
+      const String.fromEnvironment(EnvironmentVariableNames.firebaseMessagingSenderId);
   static String firebaseProjectId = const String.fromEnvironment('FIREBASE_PROJECT_ID');
-  static String firebaseStorageBucket = const String.fromEnvironment('FIREBASE_STORAGE_BUCKET');
+  static String firebaseStorageBucket = const String.fromEnvironment(EnvironmentVariableNames.firebaseStorageBucket);
 }

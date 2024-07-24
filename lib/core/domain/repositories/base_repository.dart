@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class BaseRepository {
-  late final FirebaseFirestore db;
+  late FirebaseFirestore db;
   final String userId;
 
   BaseRepository({required this.userId}) {

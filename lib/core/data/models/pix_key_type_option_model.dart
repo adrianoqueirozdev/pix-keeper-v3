@@ -10,10 +10,6 @@ class PixKeyTypeOptionModel {
 
   PixKeyTypeOptionModel({this.pixKeyType, this.label});
 
-  factory PixKeyTypeOptionModel.fromJson(Map<String, dynamic> json) => _$PixKeyTypeOptionModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PixKeyTypeOptionModelToJson(this);
-
   PixKeyTypeOptionModel copyWith({
     PixKeyType? pixKeyType,
     String? label,
@@ -23,4 +19,8 @@ class PixKeyTypeOptionModel {
       label: label ?? this.label,
     );
   }
+
+  factory PixKeyTypeOptionModel.fromJson(Map<String, dynamic> json) => _$PixKeyTypeOptionModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PixKeyTypeOptionModelToJson(this);
 }

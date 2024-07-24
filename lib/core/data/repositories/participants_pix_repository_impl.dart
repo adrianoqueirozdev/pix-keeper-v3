@@ -4,11 +4,10 @@ import 'package:pix_keeper/shared/constants/environments.dart';
 import 'package:pix_keeper/core/data/network/pix_keeper_api.dart';
 
 class ParticipantsPixRepositoryImpl implements ParticipantsPixRepository {
-  late final PixKeeperApi pixKeeperApi;
+  final PixKeeperApi pixKeeperApi;
 
-  ParticipantsPixRepositoryImpl() : super() {
-    pixKeeperApi = PixKeeperApi(Environments.brasilApiUrl);
-  }
+  ParticipantsPixRepositoryImpl({PixKeeperApi? pixKeeperApi})
+      : pixKeeperApi = pixKeeperApi ?? PixKeeperApi(Environments.brasilApiUrl);
 
   @override
   Future<List<ParticipantPixModel>> getAll() async {

@@ -6,7 +6,7 @@ import 'package:pix_keeper/core/utils/user_manager.dart';
 import 'package:pix_keeper/shared/constants/firebase_collections.dart';
 
 class PixKeysRepositoryImpl extends BaseRepository implements PixKeysRepository {
-  PixKeysRepositoryImpl() : super(userId: UserManager().userId!);
+  PixKeysRepositoryImpl({String? userId}) : super(userId: userId ?? UserManager().userId!);
 
   @override
   Future<PixKeyModel> create(PixKeyModel pixKeyModel) async {

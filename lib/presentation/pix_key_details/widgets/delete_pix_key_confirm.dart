@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_state.dart';
 
 class DeletePixKeyConfirm extends StatelessWidget {
   final PixKeyBloc pixKeyBloc;

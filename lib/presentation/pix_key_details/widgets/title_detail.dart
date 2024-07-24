@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pix_keeper/shared/widgets/base_widget.dart';
 
 class TitleDetail extends StatelessWidget {
   final String title;
@@ -21,32 +22,31 @@ class TitleDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          title,
-          style: titleStyle ??
-              textTheme.bodyMedium?.copyWith(
-                color: titleColor ?? colorScheme.secondary,
-              ),
-        ),
-        Tooltip(
-          message: value,
-          child: Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: nameStyle ?? textTheme.bodyLarge,
-          ).animate().fadeIn(duration: 300.ms),
-        ),
-        SizedBox(
-          height: spacing,
-        ),
-      ],
+    return BaseWidgetBuilder(
+      builder: (context, textTheme, colorScheme, _, __) => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: titleStyle ??
+                textTheme.bodyMedium?.copyWith(
+                  color: titleColor ?? colorScheme.secondary,
+                ),
+          ),
+          Tooltip(
+            message: value,
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: nameStyle ?? textTheme.bodyLarge,
+            ).animate().fadeIn(duration: 300.ms),
+          ),
+          SizedBox(
+            height: spacing,
+          ),
+        ],
+      ),
     );
   }
 }

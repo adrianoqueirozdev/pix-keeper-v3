@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/core/data/repositories/pix_keys_repository_impl.dart';
+import 'package:pix_keeper/core/data/models/pix_key_model.dart';
+import 'package:pix_keeper/core/domain/usecases/copy_and_open_bank.dart';
 import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
-import 'package:pix_keeper/shared/utils/format_copy_key_pix.dart';
-import 'package:pix_keeper/shared/utils/get_value_unmask.dart';
+import 'package:pix_keeper/core/domain/usecases/copy_text.dart';
+import 'package:pix_keeper/shared/utils/format_pix_key_copy_all.dart';
+import 'package:pix_keeper/shared/utils/get_unmask_value.dart';
 
 class CopyController extends GetxController {
-  final context = Get.context!;
-  late final CopyPixKey copyPixKey;
+  final CopyText _copyText;
+  final CopyPixKey _copyPixKey;
+  final CopyAndOpenAppBank _copyAndOpenAppBank;
+
+  CopyController({
+    required CopyText copyText,
+    required CopyPixKey copyPixKey,
+    required CopyAndOpenAppBank copyAndOpenAppBank,
+  })  : _copyText = copyText,
+        _copyPixKey = copyPixKey,
+        _copyAndOpenAppBank = copyAndOpenAppBank;
 
   final _id = ''.obs;
-
   String get id => _id.value;
 
   IconData icon(PixKeyModel pixKey, {isCopyAll = false}) {
@@ -23,33 +31,46 @@ class CopyController extends GetxController {
     }
   }
 
-  _setSelectedId(String text) async {
-    _id(text);
+  void _clearId() {
+    _id.value = '';
     update();
+  }
 
+  void _updateId(String text) {
+    _id.value = text;
+    update();
+  }
+
+  Future<void> _setSelectedId(String text) async {
+    _updateId(text);
     await Future.delayed(const Duration(seconds: 3));
-    _id('');
-    update();
+    _clearId();
   }
 
-  void copyKeyPixAll(PixKeyModel pixKey) async {
+  void onCopyAll(PixKeyModel pixKey) async {
     _setSelectedId(pixKey.id!);
-    await Clipboard.setData(ClipboardData(text: formatCopyKeyPix(pixKey)));
+    await _copyText.call(formatPixKeyCopyAll(pixKey));
   }
 
-  Future<List<void>> copyText(PixKeyModel pixKey) async {
+  Future<void> onCopy(PixKeyModel pixKey) async {
     _setSelectedId(pixKey.id!);
-    final unmaskValue = getValueUnmask(pixKey.pixKeyType!, pixKey.key!);
 
-    return Future.wait([
-      Clipboard.setData(ClipboardData(text: unmaskValue)),
-      copyPixKey.call(pixKey.id!),
+    final unmaskValue = getUnmaskValue(pixKey.pixKeyType!, pixKey.key!);
+
+    Future.wait([
+      _copyText.call(unmaskValue),
+      _copyPixKey.call(pixKey.id!),
     ]);
   }
 
-  @override
-  void onInit() {
-    copyPixKey = CopyPixKey(repository: PixKeysRepositoryImpl());
-    super.onInit();
+  void onCopyAndOpenAppBank(String packageName, PixKeyModel pixKey) async {
+    _setSelectedId(pixKey.id!);
+
+    final unmaskValue = getUnmaskValue(pixKey.pixKeyType!, pixKey.key!);
+
+    Future.wait([
+      _copyText.call(unmaskValue),
+      _copyAndOpenAppBank.call(packageName, pixKey),
+    ]);
   }
 }

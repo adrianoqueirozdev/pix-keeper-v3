@@ -1,5 +1,5 @@
-import 'package:pix_keeper/core/data/models/participants_pix.dart';
+import 'package:pix_keeper/core/data/models/participants_pix_model.dart';
 
 abstract interface class ParticipantsPixRepository {
-  Future<List<ParticipantPix>> getAll();
+  Future<List<ParticipantPixModel>> getAll();
 }

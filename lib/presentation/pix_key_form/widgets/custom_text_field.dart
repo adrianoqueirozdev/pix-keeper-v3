@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pix_keeper/shared/widgets/base_widget.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -31,47 +32,46 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: textTheme.titleMedium,
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        TextFormField(
-          focusNode: focusNode,
-          autofocus: autofocus,
-          textInputAction: textInputAction,
-          inputFormatters: inputFormatters,
-          validator: validator,
-          onTap: onTap ?? () {},
-          readOnly: readOnly,
-          controller: controller,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(16),
-            filled: true,
-            fillColor: colorScheme.secondaryContainer.withAlpha(100),
-            hintText: hintText,
-            hintStyle: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-            suffixIcon: suffixIcon,
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide.none,
+    return BaseWidgetBuilder(
+      builder: (context, textTheme, colorScheme, _, __) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: textTheme.titleMedium,
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          TextFormField(
+            focusNode: focusNode,
+            autofocus: autofocus,
+            textInputAction: textInputAction,
+            inputFormatters: inputFormatters,
+            validator: validator,
+            onTap: onTap ?? () {},
+            readOnly: readOnly,
+            controller: controller,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(16),
+              filled: true,
+              fillColor: colorScheme.secondaryContainer.withAlpha(100),
+              hintText: hintText,
+              hintStyle: textTheme.bodyLarge?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+              suffixIcon: suffixIcon,
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide.none,
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        )
-      ],
+          const SizedBox(
+            height: 16,
+          )
+        ],
+      ),
     );
   }
 }

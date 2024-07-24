@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pix_keeper/shared/constants/app_images.dart';
 import 'package:flutter/material.dart';
+import 'package:pix_keeper/shared/widgets/base_widget.dart';
 
 class EmptyState extends StatelessWidget {
   final String description;
@@ -10,35 +11,37 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Spacer(),
-        FadeIn(
-          duration: const Duration(milliseconds: 800),
-          child: SvgPicture.asset(
-            AppImages.empty,
-            width: size.width * 0.5,
-          ),
-        ),
-        const SizedBox(height: 16),
-        FadeIn(
-          duration: const Duration(milliseconds: 800),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              description,
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.center,
+    return BaseWidgetBuilder(
+      builder: (_, __, ___, ____, size) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            FadeIn(
+              duration: const Duration(milliseconds: 800),
+              child: SvgPicture.asset(
+                AppImages.empty,
+                width: size.width * 0.5,
+              ),
             ),
-          ),
-        ),
-        const Spacer(
-          flex: 2,
-        ),
-      ],
+            const SizedBox(height: 16),
+            FadeIn(
+              duration: const Duration(milliseconds: 800),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            const Spacer(
+              flex: 2,
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/shared/constants/animations.dart';
-import 'package:pix_keeper/shared/controllers/copy_and_open_bank_controller.dart';
-import 'package:pix_keeper/shared/utils/info_of_banks_apps.dart';
+import 'package:pix_keeper/core/data/models/pix_key_model.dart';
+import 'package:pix_keeper/shared/constants/app_constants.dart';
+import 'package:pix_keeper/shared/controllers/copy_controller.dart';
+import 'package:pix_keeper/shared/utils/bank_apps.dart';
 import 'package:pix_keeper/shared/widgets/bank_icon_button.dart';
 
 class BanksList extends StatelessWidget {
@@ -14,18 +14,20 @@ class BanksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CopyAndOpenBankController>(
-      init: CopyAndOpenBankController(),
+    final copyController = Get.find<CopyController>();
+
+    return GetBuilder<CopyController>(
+      init: copyController,
       builder: (controller) {
         return Center(
           child: SizedBox(
-            width: infoOfBanksApps.length * 64,
+            width: bankApps.length * 64,
             height: 64,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: infoOfBanksApps.length,
+              itemCount: bankApps.length,
               itemBuilder: (context, index) {
-                final bankInfo = infoOfBanksApps[index];
+                final bankInfo = bankApps[index];
 
                 return Container(
                   width: 64,
@@ -33,7 +35,7 @@ class BanksList extends StatelessWidget {
                   padding: const EdgeInsets.all(4),
                   child: BankIconButton(
                     imagePath: bankInfo.imagePath,
-                    onPressed: () => controller.copyAndOpenAppBank(bankInfo.packageName, pixKey),
+                    onPressed: () => controller.onCopyAndOpenAppBank(bankInfo.packageName, pixKey),
                   ),
                 );
               },

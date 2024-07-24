@@ -1,6 +1,6 @@
-import 'package:pix_keeper/core/data/models/pix_key.dart';
+import 'package:pix_keeper/core/data/models/pix_key_model.dart';
 
-abstract class PixKeysRepository {
+abstract interface class PixKeysRepository {
   Future<List<PixKeyModel>> getAll();
 
   Future<List<PixKeyModel>> getAllDeleted();

@@ -1,22 +1,22 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/core/domain/usecases/logout_user.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
 
 class ProfilePageController extends GetxController {
-  final User? user = FirebaseAuth.instance.currentUser;
+  final LogoutUser _logoutUser;
+
+  ProfilePageController(this._logoutUser);
 
   void onOpenAppSettings() async {
     await AppSettings.openAppSettings();
   }
 
   void onNavigateToTrashCan() {
-    final pixKeyBloc = Get.arguments as PixKeyBloc;
-    Get.toNamed(AppRoutes.trashCan, arguments: pixKeyBloc);
+    Get.toNamed(AppRoutes.trashCan);
   }
 
   void onLogout() async {
-    await FirebaseAuth.instance.signOut().then((_) => Get.offAllNamed(AppRoutes.login));
+    await _logoutUser.call().then((_) => Get.offAllNamed(AppRoutes.login));
   }
 }

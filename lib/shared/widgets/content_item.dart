@@ -1,3 +1,4 @@
+import 'package:pix_keeper/shared/widgets/base_widget.dart';
 import 'package:pix_keeper/shared/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
@@ -17,28 +18,32 @@ class ContentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: isCentered ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
-        Flexible(
-          child: Tooltip(
-            message: text,
-            child: Text(
-              text,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+    return BaseWidgetBuilder(
+      builder: (_, textTheme, __, ___, ____) {
+        return Row(
+          mainAxisAlignment: isCentered ? MainAxisAlignment.center : MainAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Tooltip(
+                message: text,
+                child: Text(
+                  text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.bodyMedium,
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(width: 4),
-        CustomIconButton(
-          size: const Size(24, 24),
-          onPressed: onPressed,
-          icon: iconData,
-          iconSize: 18,
-        ),
-      ],
+            const SizedBox(width: 4),
+            CustomIconButton(
+              size: const Size(24, 24),
+              onPressed: onPressed,
+              icon: iconData,
+              iconSize: 18,
+            ),
+          ],
+        );
+      },
     );
   }
 }

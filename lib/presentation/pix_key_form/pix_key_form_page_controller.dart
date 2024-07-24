@@ -1,28 +1,38 @@
 import 'dart:async';
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/core/data/models/participants_pix.dart';
-import 'package:pix_keeper/core/data/models/pix_key.dart';
-import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_bloc.dart';
-import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_events.dart';
-import 'package:pix_keeper/presentation/blocs/participants_pix/participants_pix_state.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_bloc.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_events.dart';
-import 'package:pix_keeper/presentation/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/core/data/models/participants_pix_model.dart';
+import 'package:pix_keeper/core/data/models/pix_key_model.dart';
+import 'package:pix_keeper/core/data/models/pix_key_type.dart';
+import 'package:pix_keeper/core/data/models/pix_key_type_option_model.dart';
+import 'package:pix_keeper/core/presentation/blocs/participants_pix/participants_pix_bloc.dart';
+import 'package:pix_keeper/core/presentation/blocs/participants_pix/participants_pix_events.dart';
+import 'package:pix_keeper/core/presentation/blocs/participants_pix/participants_pix_state.dart';
+import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_bloc.dart';
+import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_events.dart';
+import 'package:pix_keeper/core/utils/user_manager.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_institution.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/select_pix_key_type.dart';
-import 'package:pix_keeper/shared/utils/get_key_pix_type_options.dart';
+import 'package:pix_keeper/shared/constants/app_constants.dart';
+import 'package:pix_keeper/shared/utils/pix_key_types.dart';
 import 'package:uuid/uuid.dart';
 
 const int _kDebounceTime = 1000;
 
 class PixKeyFormPageController extends GetxController {
-  final List<PixKeyTypeOption> keyPixTypeOptions = getKeyPixTypeOptions();
+  final ParticipantsPixBloc participantsPixBloc;
+  final PixKeyBloc pixKeyBloc;
+  PixKeyModel? pixKeyEdit;
+
+  PixKeyFormPageController({required this.participantsPixBloc, required this.pixKeyBloc, this.pixKeyEdit}) : super() {
+    _isEdit.value = pixKeyEdit != null;
+  }
+
+  final List<PixKeyTypeOptionModel> pixKeyTypesOptions = pixKeyTypes();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final User? user = FirebaseAuth.instance.currentUser;
+  final String? userId = UserManager().userId;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController keyPixController = TextEditingController();
@@ -33,28 +43,75 @@ class PixKeyFormPageController extends GetxController {
   final _isEnabledInputKeyPix = false.obs;
   final _inputFormatters = <TextInputFormatter>[].obs;
 
-  final _selectedKeyPixType = PixKeyTypeOption().obs;
-  final _selectedParticipantPix = ParticipantPix().obs;
-  final _pixKeyEdit = PixKeyModel().obs;
+  final _selectedKeyPixType = PixKeyTypeOptionModel().obs;
+  final _selectedParticipantPix = ParticipantPixModel().obs;
   final _isEdit = false.obs;
-
-  late final ParticipantsPixBloc participantsPixBloc;
-  late final PixKeyBloc pixKeyBloc;
 
   List<TextInputFormatter> get inputFormatters => _inputFormatters;
   bool get isEnabledInputKeyPix => _isEnabledInputKeyPix.value;
 
-  PixKeyTypeOption get selectedKeyPixType => _selectedKeyPixType.value;
-  ParticipantPix get selectedParticipantPix => _selectedParticipantPix.value;
-  PixKeyModel get pixKeyEdit => _pixKeyEdit.value;
+  PixKeyTypeOptionModel get selectedKeyPixType => _selectedKeyPixType.value;
+  ParticipantPixModel get selectedParticipantPix => _selectedParticipantPix.value;
   bool get isEdit => _isEdit.value;
 
-  void bottomSheetSelectedKeyPixType(BuildContext context) {
-    keyPixController.clear();
+  @override
+  void onInit() {
+    super.onInit();
 
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => const SelectPixKeyType(),
+    _loadParticipantsPix();
+    if (pixKeyEdit != null) {
+      _initializeEditMode();
+    }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+
+    pixKeyBloc.close();
+    participantsPixBloc.close();
+    filterController.dispose();
+    keyPixController.dispose();
+    nameController.dispose();
+    favoredNameController.dispose();
+  }
+
+  void _initializeEditMode() {
+    keyPixController.text = pixKeyEdit!.key!;
+    nameController.text = pixKeyEdit!.name!;
+    favoredNameController.text = pixKeyEdit!.favoredName ?? '';
+
+    final pixKeyTypeOption = pixKeyTypesOptions.firstWhere((element) => element.pixKeyType == pixKeyEdit?.pixKeyType);
+    _selectedKeyPixType.value = pixKeyTypeOption;
+    _setDynamicValues(pixKeyTypeOption.pixKeyType!);
+
+    participantsPixBloc.stream.listen((event) {
+      if (event is ParticipantsPixLoadedState) {
+        final selectedParticipantPix = participantsPixBloc.state.participantsPix
+            .firstWhereOrNull((participantPix) => participantPix.ispb == pixKeyEdit?.institutionIspb);
+
+        if (selectedParticipantPix != null) {
+          _selectedParticipantPix.value = selectedParticipantPix;
+        }
+      }
+    });
+  }
+
+  void _loadParticipantsPix() {
+    participantsPixBloc.add(LoadParticipantsPixEvent());
+  }
+
+  void _clearFilter() {
+    filterController.clear();
+  }
+
+  void bottomSheetSelectedKeyPixType(BuildContext context) {
+    _clearFilter();
+
+    Get.bottomSheet(
+      isScrollControlled: true,
+      enterBottomSheetDuration: kBottomSheetDurationAnimation,
+      SelectPixKeyType(pixKeyFormPageController: this),
     );
   }
 
@@ -90,7 +147,10 @@ class PixKeyFormPageController extends GetxController {
   }
 
   void _debounce(VoidCallback callback, int delay) {
-    if (_timer.value.isActive) _timer.value.cancel();
+    if (_timer.value.isActive) {
+      _timer.value.cancel();
+    }
+
     _timer.value = Timer(Duration(milliseconds: delay), () => callback());
     update();
   }
@@ -98,124 +158,90 @@ class PixKeyFormPageController extends GetxController {
   void onChangeFilterParticipantsPix(String? value) async {
     _debounce(() {
       if (value == null || value.isEmpty) {
-        participantsPixBloc.add(LoadParticipantsPixEvent());
+        _loadParticipantsPix();
       } else {
         participantsPixBloc.add(FilterParticipantsPixEvent(filterController.text));
         update();
       }
     }, _kDebounceTime);
 
-    participantsPixBloc.add(LoadParticipantsPixEvent());
+    _loadParticipantsPix();
   }
 
   void onClearFilter() {
-    filterController.clear();
-    participantsPixBloc.add(LoadParticipantsPixEvent());
+    _clearFilter();
+    _loadParticipantsPix();
   }
 
-  void setSelectKeyPixType(PixKeyTypeOption? value) {
-    _selectedKeyPixType(value);
-    update();
-
-    final pixKeyType = value!.pixKeyType;
-    if (pixKeyType == null) return;
-
-    _setDynamicValues(pixKeyType);
+  void setSelectKeyPixType(PixKeyTypeOptionModel? value) {
+    if (value != null) {
+      _selectedKeyPixType(value);
+      _setDynamicValues(value.pixKeyType!);
+      update();
+    }
   }
 
-  void confirmSelectKeyPixType() {
-    Get.back();
-  }
-
-  void setSelectedParticipantPix(ParticipantPix? value) {
+  void setSelectedParticipantPix(ParticipantPixModel? value) {
     _selectedParticipantPix(value!);
     update();
-  }
-
-  void confirmSelectParticipantPix() {
-    Get.back();
   }
 
   void bottomSheetSelectedParticipantPix(BuildContext context) {
     if (participantsPixBloc.state.participantsPix.isEmpty) return;
 
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => const SelectedInstitution(),
+    Get.bottomSheet(
       isScrollControlled: true,
+      enterBottomSheetDuration: kBottomSheetDurationAnimation,
+      SelectedInstitution(pixKeyFormPageController: this),
     );
+  }
+
+  // Cria o PixKeyModel
+  PixKeyModel _createPixKeyModel() {
+    String generatePixKeyId() {
+      return isEdit ? pixKeyEdit?.id ?? '' : const Uuid().v4();
+    }
+
+    String? getFavoredName() {
+      return favoredNameController.text.isEmpty ? null : favoredNameController.text;
+    }
+
+    String getCreationDate() {
+      return isEdit ? pixKeyEdit?.createdAt ?? DateTime.now().toIso8601String() : DateTime.now().toIso8601String();
+    }
+
+    String? getUpdateDate() {
+      return isEdit ? null : DateTime.now().toIso8601String();
+    }
+
+    return PixKeyModel(
+      id: generatePixKeyId(),
+      key: keyPixController.text,
+      pixKeyType: selectedKeyPixType.pixKeyType,
+      pixKeyTypeLabel: selectedKeyPixType.label,
+      name: nameController.text,
+      favoredName: getFavoredName(),
+      institutionShortName: selectedParticipantPix.shortName,
+      institutionIspb: selectedParticipantPix.ispb,
+      isFavorite: false,
+      userId: userId,
+      createdAt: getCreationDate(),
+      updatedAt: getUpdateDate(),
+    );
+  }
+
+  void _dispatchPixKeyEvent(PixKeyModel pixKey) {
+    if (isEdit) {
+      pixKeyBloc.add(UpdatePixKeyEvent(pixKeyModel: pixKey));
+    } else {
+      pixKeyBloc.add(CreatePixKeyEvent(pixKeyModel: pixKey));
+    }
   }
 
   void savePixKey() async {
     if (formKey.currentState!.validate()) {
-      final pixKey = PixKeyModel(
-        id: isEdit ? pixKeyEdit.id : const Uuid().v4(),
-        key: keyPixController.text,
-        pixKeyType: selectedKeyPixType.pixKeyType,
-        pixKeyTypeLabel: selectedKeyPixType.label,
-        name: nameController.text,
-        favoredName: favoredNameController.text.isEmpty ? null : favoredNameController.text,
-        institutionShortName: selectedParticipantPix.shortName,
-        institutionIspb: selectedParticipantPix.ispb,
-        isFavorite: false,
-        userId: user?.uid,
-        createdAt: isEdit ? pixKeyEdit.createdAt : DateTime.now().toIso8601String(),
-        updatedAt: isEdit ? null : DateTime.now().toIso8601String(),
-      );
-
-      if (pixKeyEdit.id == null) {
-        pixKeyBloc.add(CreatePixKeyEvent(pixKeyModel: pixKey));
-      } else {
-        pixKeyBloc.add(UpdatePixKeyEvent(pixKeyModel: pixKey));
-      }
+      final pixKey = _createPixKeyModel();
+      _dispatchPixKeyEvent(pixKey);
     }
-  }
-
-  @override
-  void onInit() {
-    participantsPixBloc = ParticipantsPixBloc();
-    pixKeyBloc = PixKeyBloc();
-
-    final arguments = Get.arguments as PixKeyModel?;
-    if (arguments != null) {
-      _pixKeyEdit.value = arguments;
-      _isEdit.value = true;
-
-      final pixKeyTypeOption = keyPixTypeOptions.firstWhere((element) => element.pixKeyType == arguments.pixKeyType);
-      _selectedKeyPixType.value = pixKeyTypeOption;
-
-      keyPixController.text = arguments.key!;
-      nameController.text = arguments.name!;
-      favoredNameController.text = arguments.favoredName ?? '';
-
-      _setDynamicValues(pixKeyTypeOption.pixKeyType!);
-
-      update();
-    }
-
-    participantsPixBloc.add(LoadParticipantsPixEvent());
-    participantsPixBloc.stream.listen((event) {
-      if (event is ParticipantsPixLoadedState) {
-        if (arguments != null) {
-          final selectedParticipantPix = participantsPixBloc.state.participantsPix
-              .firstWhereOrNull((element) => element.ispb == arguments.institutionIspb);
-
-          if (selectedParticipantPix != null) {
-            _selectedParticipantPix.value = selectedParticipantPix;
-            update();
-          }
-        }
-      }
-    });
-
-    pixKeyBloc.stream.listen((event) {
-      if (event is CreatePixKeySuccessState) {
-        Get.back(result: true);
-      } else if (event is UpdatePixKeySuccessState) {
-        Get.back(result: event.pixKey);
-      }
-    });
-
-    super.onInit();
   }
 }

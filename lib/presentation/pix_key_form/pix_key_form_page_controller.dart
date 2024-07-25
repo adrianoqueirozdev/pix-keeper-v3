@@ -25,9 +25,17 @@ class PixKeyFormPageController extends GetxController {
   final ParticipantsPixBloc participantsPixBloc;
   final PixKeyBloc pixKeyBloc;
   PixKeyModel? pixKeyEdit;
+  final String? pixKeyCopied;
+  final PixKeyTypeOptionModel? newPixKeyType;
 
-  PixKeyFormPageController({required this.participantsPixBloc, required this.pixKeyBloc, this.pixKeyEdit}) : super() {
-    _isEdit.value = pixKeyEdit != null;
+  PixKeyFormPageController({
+    required this.participantsPixBloc,
+    required this.pixKeyBloc,
+    this.pixKeyEdit,
+    this.pixKeyCopied,
+    this.newPixKeyType,
+  }) : super() {
+    _isEdit.value = pixKeyEdit != null && pixKeyCopied == null && newPixKeyType == null;
   }
 
   final List<PixKeyTypeOptionModel> pixKeyTypesOptions = pixKeyTypes();
@@ -59,9 +67,8 @@ class PixKeyFormPageController extends GetxController {
     super.onInit();
 
     _loadParticipantsPix();
-    if (pixKeyEdit != null) {
-      _initializeEditMode();
-    }
+    _initializeEditMode();
+    _onAddCopiedPixKey();
   }
 
   @override
@@ -76,12 +83,18 @@ class PixKeyFormPageController extends GetxController {
     favoredNameController.dispose();
   }
 
+  void _loadParticipantsPix() {
+    participantsPixBloc.add(LoadParticipantsPixEvent());
+  }
+
   void _initializeEditMode() {
+    if (pixKeyEdit == null) return;
+
     keyPixController.text = pixKeyEdit!.key!;
     nameController.text = pixKeyEdit!.name!;
     favoredNameController.text = pixKeyEdit!.favoredName ?? '';
 
-    final pixKeyTypeOption = pixKeyTypesOptions.firstWhere((element) => element.pixKeyType == pixKeyEdit?.pixKeyType);
+    final pixKeyTypeOption = _getSelectedKeyPixType(pixKeyEdit!.pixKeyType!);
     _selectedKeyPixType.value = pixKeyTypeOption;
     _setDynamicValues(pixKeyTypeOption.pixKeyType!);
 
@@ -97,8 +110,16 @@ class PixKeyFormPageController extends GetxController {
     });
   }
 
-  void _loadParticipantsPix() {
-    participantsPixBloc.add(LoadParticipantsPixEvent());
+  void _onAddCopiedPixKey() {
+    if (pixKeyCopied == null && newPixKeyType == null) return;
+
+    keyPixController.text = pixKeyCopied!;
+    _setDynamicValues(newPixKeyType!.pixKeyType!);
+    _selectedKeyPixType.value = _getSelectedKeyPixType(newPixKeyType!.pixKeyType!);
+  }
+
+  PixKeyTypeOptionModel _getSelectedKeyPixType(PixKeyType pixKeyType) {
+    return pixKeyTypesOptions.firstWhere((pixKeyTypeOption) => pixKeyTypeOption.pixKeyType == pixKeyType);
   }
 
   void _clearFilter() {
@@ -196,7 +217,6 @@ class PixKeyFormPageController extends GetxController {
     );
   }
 
-  // Cria o PixKeyModel
   PixKeyModel _createPixKeyModel() {
     String generatePixKeyId() {
       return isEdit ? pixKeyEdit?.id ?? '' : const Uuid().v4();

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:pix_keeper/config/logger_config.dart';
-import 'package:pix_keeper/core/data/models/pix_key_model.dart';
 import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/core/presentation/factories/participants_pix_bloc_factory.dart';
 import 'package:pix_keeper/core/presentation/factories/pix_key_bloc_factory.dart';
+import 'package:pix_keeper/core/utils/new_pix_key_params.dart';
 import 'package:pix_keeper/presentation/pix_key_form/pix_key_form_page_controller.dart';
 import 'package:pix_keeper/presentation/pix_key_form/widgets/custom_text_field.dart';
 import 'package:pix_keeper/shared/utils/validation_pix_key_form.dart';
@@ -16,18 +15,21 @@ class PixKeyFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pixKeyFormParams = Get.arguments as PixKeyFormParams?;
+
     return GetBuilder<PixKeyFormPageController>(
       init: PixKeyFormPageController(
         pixKeyBloc: PixKeyBlocFactory.create(),
         participantsPixBloc: ParticipantsPixBlocFactory.create(),
-        pixKeyEdit: Get.arguments as PixKeyModel?,
+        pixKeyCopied: pixKeyFormParams?.pixKeyCopied,
+        newPixKeyType: pixKeyFormParams?.pixKeyTypeOption,
+        pixKeyEdit: pixKeyFormParams?.pixKeyEdit,
       ),
       builder: (controller) {
         return BlocListener<PixKeyBloc, PixKeyState>(
           bloc: controller.pixKeyBloc,
           listener: (context, state) {
             if (state is CreatePixKeySuccessState) {
-              logger.d("CreatePixKeySuccessState");
               Get.back(result: true);
             } else if (state is UpdatePixKeySuccessState) {
               Get.back(result: state.pixKey);

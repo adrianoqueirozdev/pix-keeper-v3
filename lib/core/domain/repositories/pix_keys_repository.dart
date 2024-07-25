@@ -16,4 +16,6 @@ abstract interface class PixKeysRepository {
   Future<void> restore(String id);
 
   Future<void> copy(String id);
+
+  Future<void> deleteAll();
 }

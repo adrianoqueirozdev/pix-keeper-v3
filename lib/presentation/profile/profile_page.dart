@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/domain/usecases/logout_user.dart';
+import 'package:pix_keeper/core/presentation/factories/pix_keys_deleted_bloc_factory.dart';
 import 'package:pix_keeper/core/utils/user_manager.dart';
 import 'package:pix_keeper/presentation/profile/profile_page_controller.dart';
 import 'package:pix_keeper/presentation/profile/widgets/user_profile_info.dart';
@@ -16,7 +17,7 @@ class ProfilePage extends StatelessWidget {
     final user = UserManager().user;
 
     return GetBuilder<ProfilePageController>(
-      init: ProfilePageController(Get.find<LogoutUser>()),
+      init: ProfilePageController(Get.find<LogoutUser>(), PixKeysDeletedBlocFactory.create()),
       builder: (controller) {
         return BaseWidgetBuilder(
           builder: (context, textTheme, colorScheme, isDarkMode, size) {
@@ -49,6 +50,7 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      enabled: !controller.pixKeysEmpty,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       onTap: controller.onNavigateToTrashCan,
                       leading: const Icon(Icons.delete_sweep),

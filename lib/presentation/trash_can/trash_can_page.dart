@@ -32,6 +32,9 @@ class TrashCanPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is PixKeysDeletedSuccessState) {
                   pixKeyBloc.add(LoadPixKeysEvent());
+                } else if (state is EmptyTheTrashCanSuccessState) {
+                  pixKeyBloc.add(LoadPixKeysEvent());
+                  Get.back();
                 }
               },
               child: BlocBuilder<PixKeysDeletedBloc, PixKeysDeletedState>(
@@ -47,6 +50,17 @@ class TrashCanPage extends StatelessWidget {
                     _ => const LoadDataError(),
                   };
                 },
+              ),
+            ),
+          ),
+          bottomSheet: Padding(
+            padding: const EdgeInsets.all(12),
+            child: SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: FilledButton.icon(
+                onPressed: controller.onShowBottomSheetDeleteAllForever,
+                label: const Text("Esvaziar lixeira"),
               ),
             ),
           ),

@@ -10,6 +10,7 @@ import 'package:pix_keeper/core/domain/usecases/copy_and_open_bank.dart';
 import 'package:pix_keeper/core/domain/usecases/copy_pix_key.dart';
 import 'package:pix_keeper/core/domain/usecases/copy_text.dart';
 import 'package:pix_keeper/core/domain/usecases/create_pix_key.dart';
+import 'package:pix_keeper/core/domain/usecases/delete_all_pix_keys.dart';
 import 'package:pix_keeper/core/domain/usecases/delete_pix_key.dart';
 import 'package:pix_keeper/core/domain/usecases/get_all_participants_pix.dart';
 import 'package:pix_keeper/core/domain/usecases/get_all_pix_keys.dart';
@@ -56,6 +57,7 @@ class DependencyInjection {
     Get.lazyPut<DeletePixKey>(() => DeletePixKey(repository: Get.find<PixKeysRepositoryImpl>()));
     Get.lazyPut<GetAllPixKeys>(() => GetAllPixKeys(repository: Get.find<PixKeysRepositoryImpl>()));
     Get.lazyPut<RestorePixKey>(() => RestorePixKey(repository: Get.find<PixKeysRepositoryImpl>()));
+    Get.lazyPut<DeleteAllPixKeys>(() => DeleteAllPixKeys(repository: Get.find<PixKeysRepositoryImpl>()));
     Get.lazyPut<CopyPixKey>(() => CopyPixKey(repository: Get.find<PixKeysRepositoryImpl>()));
     Get.lazyPut<UpdatePixKey>(() => UpdatePixKey(repository: Get.find<PixKeysRepositoryImpl>()));
 
@@ -78,6 +80,7 @@ class DependencyInjection {
     Get.lazyPut<PixKeysDeletedBloc>(() => PixKeysDeletedBloc(
           getAllPixKeysDeleted: Get.find<GetAllPixKeysDeleted>(),
           restorePixKey: Get.find<RestorePixKey>(),
+          deleteAllPixKeys: Get.find<DeleteAllPixKeys>(),
         ));
     Get.lazyPut<ParticipantsPixBloc>(() => ParticipantsPixBloc(
           getAllParticipantsPix: Get.find<GetAllParticipantsPix>(),

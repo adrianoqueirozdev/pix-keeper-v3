@@ -16,3 +16,9 @@ class PixKeysDeletedSuccessState extends PixKeysDeletedState {
 class PixKeysDeletedErrorState extends PixKeysDeletedState {
   PixKeysDeletedErrorState({required super.error});
 }
+
+class EmptyTheTrashCanSuccessState extends PixKeysDeletedState {}
+
+class EmptyTheTrashCanErrorState extends PixKeysDeletedState {
+  EmptyTheTrashCanErrorState({required super.error});
+}

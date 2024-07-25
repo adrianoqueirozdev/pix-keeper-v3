@@ -98,4 +98,23 @@ class PixKeysRepositoryImpl extends BaseRepository implements PixKeysRepository 
         .doc(id)
         .update({PixKeysFields.deletedAt: null});
   }
+
+  @override
+  Future<void> deleteAll() async {
+    QuerySnapshot query = await db
+        .collection(FirebaseCollections.users)
+        .doc(userId)
+        .collection(FirebaseCollections.pixKeys)
+        .where(PixKeysFields.deletedAt, isNull: false)
+        .get();
+
+    for (DocumentSnapshot doc in query.docs) {
+      await db
+          .collection(FirebaseCollections.users)
+          .doc(userId)
+          .collection(FirebaseCollections.pixKeys)
+          .doc(doc.id)
+          .delete();
+    }
+  }
 }

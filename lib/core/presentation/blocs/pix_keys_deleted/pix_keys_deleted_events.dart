@@ -7,3 +7,5 @@ class RestorePixKeyEvent extends PixKeysDeletedEvents {
 
   RestorePixKeyEvent(this.id);
 }
+
+class EmptyTheTrashCanEvent extends PixKeysDeletedEvents {}

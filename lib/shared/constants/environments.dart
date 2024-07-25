@@ -9,6 +9,6 @@ sealed class Environments {
   static String firebaseAppId = const String.fromEnvironment(EnvironmentVariableNames.firebaseAppId);
   static String firebaseMessagingSenderId =
       const String.fromEnvironment(EnvironmentVariableNames.firebaseMessagingSenderId);
-  static String firebaseProjectId = const String.fromEnvironment('FIREBASE_PROJECT_ID');
+  static String firebaseProjectId = const String.fromEnvironment(EnvironmentVariableNames.firebaseProjectId);
   static String firebaseStorageBucket = const String.fromEnvironment(EnvironmentVariableNames.firebaseStorageBucket);
 }

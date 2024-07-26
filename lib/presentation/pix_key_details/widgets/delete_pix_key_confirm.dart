@@ -3,60 +3,52 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_bloc.dart';
 import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_state.dart';
+import 'package:pix_keeper/shared/widgets/base_widget.dart';
+import 'package:pix_keeper/shared/widgets/bottom_sheet_group_button.dart';
+import 'package:pix_keeper/shared/widgets/modal_bottom_sheet_base.dart';
 
 class DeletePixKeyConfirm extends StatelessWidget {
-  final PixKeyBloc pixKeyBloc;
-  final VoidCallback deletePixKey;
+  final VoidCallback onDeletePixKey;
+  final VoidCallback onCancel;
 
-  const DeletePixKeyConfirm({super.key, required this.deletePixKey, required this.pixKeyBloc});
+  const DeletePixKeyConfirm({super.key, required this.onDeletePixKey, required this.onCancel});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final pixKeyBloc = Get.find<PixKeyBloc>();
 
-    return BlocBuilder<PixKeyBloc, PixKeyState>(
-      bloc: pixKeyBloc,
-      builder: (context, state) {
-        final isLoading = state is DeletePixKeyLoadingState;
+    return BaseWidgetBuilder(
+      builder: (context, textTheme, colorScheme, isDarkMode, size) {
+        return BlocBuilder<PixKeyBloc, PixKeyState>(
+          bloc: pixKeyBloc,
+          builder: (context, state) {
+            final isLoading = state is DeletePixKeyLoadingState;
 
-        return AlertDialog(
-          icon: Icon(
-            Icons.delete,
-            color: colorScheme.error,
-            size: 32,
-          ),
-          title: const Text(
-            "Deletar Chave",
-            textAlign: TextAlign.center,
-          ),
-          content: const Text(
-            "Tem certeza que deseja deletar esta chave?",
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: isLoading ? null : () => Get.back(),
-              child: const Text("Cancelar"),
-            ),
-            FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: colorScheme.error,
-                foregroundColor: colorScheme.onError,
-              ),
-              onPressed: deletePixKey,
-              icon: isLoading
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 2,
+            return ModalBottomSheetBase(
+              height: 256,
+              title: "Apagar Chave",
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Você tem certeza de que deseja apagar esta chave? As chaves apagadas ficaram na lixeira.",
+                        style: textTheme.bodyMedium,
                       ),
-                    )
-                  : null,
-              label: isLoading ? const SizedBox.shrink() : const Text("Deletar"),
-            ),
-          ],
+                      const SizedBox(height: 32),
+                      BottomSheetGroupButton(
+                        onSecondaryAction: isLoading ? null : onCancel,
+                        onPrimaryAction: isLoading ? null : onDeletePixKey,
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+                if (isLoading) const LinearProgressIndicator(),
+              ],
+            );
+          },
         );
       },
     );

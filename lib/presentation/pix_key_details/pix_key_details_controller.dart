@@ -27,12 +27,18 @@ class PixKeyDetailsController extends GetxController {
     await Share.share(formatPixKeyCopyAll(pixKeyDetails));
   }
 
-  void onDeletePixKey() {
-    Get.dialog(DeletePixKeyConfirm(
-      pixKeyBloc: pixKeyBloc,
-      deletePixKey: () {
-        pixKeyBloc.add(DeletePixKeyEvent(id: pixKeyDetails.id!));
-      },
+  void onShowBottomSheetDeletePixKey() {
+    Get.bottomSheet(DeletePixKeyConfirm(
+      onDeletePixKey: _onDeletePixKey,
+      onCancel: _onCancel,
     ));
+  }
+
+  void _onDeletePixKey() {
+    pixKeyBloc.add(DeletePixKeyEvent(id: pixKeyDetails.id!));
+  }
+
+  void _onCancel() {
+    Get.back();
   }
 }

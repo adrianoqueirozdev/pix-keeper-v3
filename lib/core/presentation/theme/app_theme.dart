@@ -37,6 +37,9 @@ class AppTheme {
           foregroundColor: isDarkMode ? colorScheme.onPrimaryContainer : colorScheme.onPrimary,
         ),
       ),
+      snackBarTheme: const SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+      ),
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: colorScheme.surface,
         surfaceTintColor: colorScheme.surface,

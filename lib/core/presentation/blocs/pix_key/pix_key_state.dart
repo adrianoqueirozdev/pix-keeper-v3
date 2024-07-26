@@ -41,10 +41,23 @@ class UpdatePixKeyErrorState extends PixKeyState {
 // DELETE PIX KEY
 class DeletePixKeyLoadingState extends PixKeyState {}
 
-class DeletePixKeySuccessState extends PixKeyState {}
+class DeletePixKeySuccessState extends PixKeyState {
+  final String id;
+
+  DeletePixKeySuccessState({required this.id});
+}
 
 class DeletePixKeyErrorState extends PixKeyState {
   DeletePixKeyErrorState({required super.error});
+}
+
+// RESTORE PIX KEY
+class RestorePixKeyLoadingState extends PixKeyState {}
+
+class RestorePixKeySuccessState extends PixKeyState {}
+
+class RestorePixKeyErrorState extends PixKeyState {
+  RestorePixKeyErrorState({required super.error});
 }
 
 // GENERAL ERROR

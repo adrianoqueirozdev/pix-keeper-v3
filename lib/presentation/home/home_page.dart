@@ -22,71 +22,85 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final userPhotoUrl = UserManager().user?.photoURL;
 
+    final pixKeyBloc = Get.find<PixKeyBloc>();
+
     return GetBuilder<HomePageController>(
-      init: HomePageController(pixKeyBloc: Get.find<PixKeyBloc>()),
+      init: HomePageController(pixKeyBloc: pixKeyBloc),
       builder: (controller) {
-        return BaseWidgetBuilder(
-          builder: (context, textTheme, colorScheme, isDarkMode, _) {
-            return Scaffold(
-              backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
-              appBar: AppBar(
-                backgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.primary,
-                foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
-                toolbarHeight: 72,
-                leadingWidth: 52,
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: SvgPicture.asset(
-                    AppImages.logoDefault,
-                    width: 40,
-                    height: 40,
-                  ).animate().fade(duration: kDurationAnimation),
+        return BlocListener<PixKeyBloc, PixKeyState>(
+          bloc: pixKeyBloc,
+          listener: (context, state) {
+            if (state is DeletePixKeySuccessState) {
+              Future.microtask(() => controller.showSnackBarDeletePixKeySuccess(state.id));
+            } else if (state is RestorePixKeySuccessState) {
+              Future.microtask(() => controller.showSnackBarRestorePixKeySuccess());
+            }
+          },
+          child: BaseWidgetBuilder(
+            builder: (context, textTheme, colorScheme, isDarkMode, _) {
+              final backgroundColor = isDarkMode ? colorScheme.onSecondary : colorScheme.primary;
+
+              return Scaffold(
+                backgroundColor: backgroundColor,
+                appBar: AppBar(
+                  backgroundColor: backgroundColor,
+                  foregroundColor: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
+                  toolbarHeight: 72,
+                  leadingWidth: 52,
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: SvgPicture.asset(
+                      AppImages.logoDefault,
+                      width: 40,
+                      height: 40,
+                    ).animate().fade(duration: kDurationAnimation),
+                  ),
+                  title: Text(
+                    'Chaves Pix',
+                    style: textTheme.headlineSmall?.copyWith(
+                      color: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
+                    ),
+                  ),
+                  actions: [
+                    if (userPhotoUrl != null) ...[
+                      InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: controller.onNavigateToProfile,
+                        child: ProfileAvatar(imageUrl: userPhotoUrl),
+                      ),
+                      const SizedBox(width: 12),
+                    ]
+                  ],
                 ),
-                title: Text(
-                  'Chaves Pix',
-                  style: textTheme.headlineSmall?.copyWith(
-                    color: isDarkMode ? colorScheme.onSurface : colorScheme.onPrimary,
+                body: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: BlocBuilder<PixKeyBloc, PixKeyState>(
+                    bloc: controller.pixKeyBloc,
+                    builder: (context, state) {
+                      return switch (state.runtimeType) {
+                        const (PixKeyInitialState) => const PixKeysListSkeleton(),
+                        const (PixKeyLoadedState) => PixKeysList(
+                            pixKeys: state.pixKeys!,
+                            onRefresh: controller.onRefresh,
+                            onNavigateToDetails: controller.onNavigateToDetails,
+                            onShowBottomSheetBanks: controller.onShowBottomSheetBanks,
+                          ),
+                        _ => const LoadDataError(),
+                      };
+                    },
                   ),
                 ),
-                actions: [
-                  if (userPhotoUrl != null) ...[
-                    InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: controller.onNavigateToProfile,
-                      child: ProfileAvatar(imageUrl: userPhotoUrl),
-                    ),
-                    const SizedBox(width: 12),
-                  ]
-                ],
-              ),
-              body: Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: controller.onNavigateToForm,
+                  child: const Icon(Icons.add),
                 ),
-                padding: const EdgeInsets.all(12),
-                child: BlocBuilder<PixKeyBloc, PixKeyState>(
-                  bloc: controller.pixKeyBloc,
-                  builder: (context, state) {
-                    return switch (state.runtimeType) {
-                      const (PixKeyInitialState) => const PixKeysListSkeleton(),
-                      const (PixKeyLoadedState) => PixKeysList(
-                          pixKeys: state.pixKeys!,
-                          onRefresh: controller.onRefresh,
-                          onNavigateToDetails: controller.onNavigateToDetails,
-                          onShowBottomSheetBanks: controller.onShowBottomSheetBanks,
-                        ),
-                      _ => const LoadDataError(),
-                    };
-                  },
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: controller.onNavigateToForm,
-                child: const Icon(Icons.add),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );

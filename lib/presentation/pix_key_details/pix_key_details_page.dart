@@ -81,7 +81,7 @@ class PixKeyDetailsPage extends StatelessWidget {
                                   icon: const Icon(Icons.share),
                                 ),
                                 IconButton(
-                                  onPressed: controller.onDeletePixKey,
+                                  onPressed: controller.onShowBottomSheetDeletePixKey,
                                   icon: Icon(
                                     Icons.delete,
                                     color: colorScheme.error,

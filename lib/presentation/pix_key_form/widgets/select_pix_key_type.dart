@@ -22,6 +22,7 @@ class SelectPixKeyType extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: controller.pixKeyTypesOptions.length,
                     itemBuilder: (context, index) {
                       return RadioListTile(
@@ -39,7 +40,8 @@ class SelectPixKeyType extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   width: double.infinity,
                   height: 56,
                   child: FilledButton(
@@ -47,9 +49,7 @@ class SelectPixKeyType extends StatelessWidget {
                     child: const Text('Confirmar'),
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
-                )
+                const SizedBox(height: 24)
               ],
             );
           },

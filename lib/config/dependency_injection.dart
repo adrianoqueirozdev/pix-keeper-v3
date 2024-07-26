@@ -76,6 +76,7 @@ class DependencyInjection {
           getAllPixKeys: Get.find<GetAllPixKeys>(),
           deletePixKey: Get.find<DeletePixKey>(),
           updatePixKey: Get.find<UpdatePixKey>(),
+          restorePixKey: Get.find<RestorePixKey>(),
         ));
     Get.lazyPut<PixKeysDeletedBloc>(() => PixKeysDeletedBloc(
           getAllPixKeysDeleted: Get.find<GetAllPixKeysDeleted>(),

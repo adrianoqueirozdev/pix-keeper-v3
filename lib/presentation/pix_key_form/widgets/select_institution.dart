@@ -26,6 +26,7 @@ class SelectedInstitution extends StatelessWidget {
               children: [
                 Container(
                   height: 56,
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   decoration: BoxDecoration(
                     color: colorScheme.secondaryContainer.withAlpha(100),
@@ -34,9 +35,7 @@ class SelectedInstitution extends StatelessWidget {
                   child: Row(
                     textDirection: Directionality.of(context),
                     children: [
-                      const Icon(
-                        Icons.search,
-                      ),
+                      const Icon(Icons.search),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, right: 8),
@@ -79,6 +78,7 @@ class SelectedInstitution extends StatelessWidget {
 
                     return Expanded(
                       child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: list.length,
                         itemBuilder: (context, index) {
                           return RadioListTile(
@@ -113,12 +113,11 @@ class SelectedInstitution extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 Visibility(
                   visible: controller.participantsPixBloc.state.participantsPix.isNotEmpty,
-                  child: SizedBox(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
                     width: double.infinity,
                     height: 56,
                     child: FilledButton(
@@ -127,9 +126,7 @@ class SelectedInstitution extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
-                )
+                const SizedBox(height: 24)
               ],
             );
           },

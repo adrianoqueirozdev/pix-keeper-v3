@@ -21,3 +21,9 @@ class DeletePixKeyEvent extends PixKeyEvent {
 
   DeletePixKeyEvent({required this.id});
 }
+
+class RestorePixKeyEvent extends PixKeyEvent {
+  final String id;
+
+  RestorePixKeyEvent({required this.id});
+}

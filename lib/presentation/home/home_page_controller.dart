@@ -10,9 +10,10 @@ import 'package:pix_keeper/core/presentation/blocs/pix_key/pix_key_state.dart';
 import 'package:pix_keeper/core/utils/new_pix_key_params.dart';
 import 'package:pix_keeper/presentation/home/widgets/add_copied_pix_key.dart';
 import 'package:pix_keeper/shared/constants/app_routes.dart';
+import 'package:pix_keeper/shared/utils/extensions/snack_bar_extension.dart';
+import 'package:pix_keeper/shared/utils/extensions/string_extensions.dart';
 import 'package:pix_keeper/shared/utils/format_mask.dart';
 import 'package:pix_keeper/shared/utils/pix_key_types.dart';
-import 'package:pix_keeper/shared/utils/validate_uuid.dart';
 import 'package:pix_keeper/shared/widgets/banks_list.dart';
 
 class HomePageController extends GetxController {
@@ -108,29 +109,29 @@ class HomePageController extends GetxController {
           return;
         }
 
-        if (validateUuid(text)) {
+        if (text.isValidUuid()) {
           _pixKeyCopied.value = text;
           _pixKeyTypeOptionModel.value = _getPixKeyTypeOption(PixKeyType.random);
           _openBottomSheet.value = true;
           return;
         }
 
-        if (GetUtils.isCpf(_cleanText(text))) {
-          _pixKeyCopied.value = FormatMask.maskCpf(_cleanText(text));
+        if (GetUtils.isCpf(text.cleanText())) {
+          _pixKeyCopied.value = FormatMask.maskCpf(text.cleanText());
           _pixKeyTypeOptionModel.value = _getPixKeyTypeOption(PixKeyType.cpf);
           _openBottomSheet.value = true;
           return;
         }
 
-        if (GetUtils.isCnpj(_cleanText(text))) {
-          _pixKeyCopied.value = FormatMask.maskCnpj(_cleanText(text));
+        if (GetUtils.isCnpj(text.cleanText())) {
+          _pixKeyCopied.value = FormatMask.maskCnpj(text.cleanText());
           _pixKeyTypeOptionModel.value = _getPixKeyTypeOption(PixKeyType.cnpj);
           _openBottomSheet.value = true;
           return;
         }
 
-        if (GetUtils.isPhoneNumber(_cleanText(text))) {
-          _pixKeyCopied.value = FormatMask.maskPhone(_cleanText(text));
+        if (GetUtils.isPhoneNumber(text.cleanText())) {
+          _pixKeyCopied.value = FormatMask.maskPhone(text.cleanText());
           _pixKeyTypeOptionModel.value = _getPixKeyTypeOption(PixKeyType.phone);
           _openBottomSheet.value = true;
           return;
@@ -145,10 +146,6 @@ class HomePageController extends GetxController {
 
   PixKeyTypeOptionModel _getPixKeyTypeOption(PixKeyType pixKeyType) {
     return pixKeyTypes().firstWhere((p) => p.pixKeyType == pixKeyType);
-  }
-
-  String _cleanText(String text) {
-    return text.replaceAll(RegExp(r'[^\w\s]+'), '');
   }
 
   void _loadPixKeys() {
@@ -179,6 +176,24 @@ class HomePageController extends GetxController {
 
   void onShowBottomSheetBanks(PixKeyModel pixKey) {
     _showBottomSheetBanks(Get.context!, pixKey);
+  }
+
+  void showSnackBarDeletePixKeySuccess(String pixKeyId) {
+    Get.showCustomSnackbar(
+      message: 'Chave Pix deletada com sucesso!',
+      mainButton: TextButton(
+        onPressed: () => onRestorePixKey(pixKeyId),
+        child: const Text("Desfazer"),
+      ),
+    );
+  }
+
+  void showSnackBarRestorePixKeySuccess() {
+    Get.showCustomSnackbar(message: 'Chave Pix restaurada com sucesso!');
+  }
+
+  void onRestorePixKey(String pixKeyId) {
+    pixKeyBloc.add(RestorePixKeyEvent(id: pixKeyId));
   }
 }
 

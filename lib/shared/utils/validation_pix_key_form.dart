@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pix_keeper/core/data/models/pix_key_type.dart';
 import 'package:pix_keeper/core/data/models/pix_key_type_option_model.dart';
-import 'package:pix_keeper/shared/utils/validate_uuid.dart';
+import 'package:pix_keeper/shared/utils/extensions/string_extensions.dart';
 
 const _empty = "Campo obrigatório";
 
@@ -37,7 +37,7 @@ class ValidationPixKeyForm {
         if (!GetUtils.isEmail(text)) return "E-mail inválido";
         break;
       case PixKeyType.random:
-        if (!validateUuid(text)) return "Chave aleatória inválida";
+        if (!text.isValidUuid()) return "Chave aleatória inválida";
         break;
       default:
         return null;

@@ -185,5 +185,21 @@ void main() {
 
       expect(doc.data()![PixKeysFields.copiedAt], isNotNull);
     });
+
+    // Testa se todos os PixKeyModels foram deletados
+    test('should delete all deleted PixKeyModels', () async {
+      await repository.create(pixKeyModel);
+      await repository.delete(id);
+      await repository.deleteAll();
+
+      final query = await fakeFirestore
+          .collection(FirebaseCollections.users)
+          .doc(userId)
+          .collection(FirebaseCollections.pixKeys)
+          .where(PixKeysFields.deletedAt, isNull: false)
+          .get();
+
+      expect(query.docs.isEmpty, true);
+    });
   });
 }

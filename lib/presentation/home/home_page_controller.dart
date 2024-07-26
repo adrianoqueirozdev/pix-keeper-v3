@@ -145,7 +145,7 @@ class HomePageController extends GetxController {
   }
 
   PixKeyTypeOptionModel _getPixKeyTypeOption(PixKeyType pixKeyType) {
-    return pixKeyTypes().firstWhere((p) => p.pixKeyType == pixKeyType);
+    return pixKeyTypes.firstWhere((p) => p.pixKeyType == pixKeyType);
   }
 
   void _loadPixKeys() {

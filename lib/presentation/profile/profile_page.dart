@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
               body: Container(
                 decoration: BoxDecoration(
                   color: colorScheme.surface,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(0)),
                 ),
                 padding: const EdgeInsets.only(top: 12),
                 child: Column(
@@ -54,7 +54,12 @@ class ProfilePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       onTap: controller.onNavigateToTrashCan,
                       leading: const Icon(Icons.delete_sweep),
-                      title: const Text("Lixeira"),
+                      title: Text(
+                        "Lixeira",
+                        style: textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       style: ListTileStyle.drawer,
                       trailing: const Icon(Icons.keyboard_arrow_right),
                     ),
@@ -65,7 +70,12 @@ class ProfilePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       onTap: controller.onOpenAppSettings,
                       leading: const Icon(Icons.settings),
-                      title: const Text("Configurações"),
+                      title: Text(
+                        "Configurações",
+                        style: textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       style: ListTileStyle.drawer,
                       trailing: const Icon(Icons.keyboard_arrow_right),
                     ),

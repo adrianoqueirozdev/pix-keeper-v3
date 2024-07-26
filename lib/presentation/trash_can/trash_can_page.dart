@@ -54,13 +54,14 @@ class TrashCanPage extends StatelessWidget {
             ),
           ),
           bottomSheet: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 24),
             child: SizedBox(
               width: double.infinity,
               height: 54,
               child: FilledButton.icon(
                 onPressed: controller.onShowBottomSheetDeleteAllForever,
                 label: const Text("Esvaziar lixeira"),
+                icon: const Icon(Icons.delete_forever),
               ),
             ),
           ),

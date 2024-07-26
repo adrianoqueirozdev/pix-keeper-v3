@@ -25,6 +25,14 @@ class PixKeyQrCode extends StatelessWidget {
           child: QrImageView(
             data: text,
             version: QrVersions.auto,
+            eyeStyle: QrEyeStyle(
+              eyeShape: QrEyeShape.circle,
+              color: isDarkMode ? colorScheme.surface : colorScheme.onSurface,
+            ),
+            dataModuleStyle: QrDataModuleStyle(
+              dataModuleShape: QrDataModuleShape.circle,
+              color: isDarkMode ? colorScheme.surface : colorScheme.onSurface,
+            ),
           ),
         ),
       ),

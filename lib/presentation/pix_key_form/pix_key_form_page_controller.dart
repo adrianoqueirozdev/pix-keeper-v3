@@ -38,7 +38,7 @@ class PixKeyFormPageController extends GetxController {
     _isEdit.value = pixKeyEdit != null && pixKeyCopied == null && newPixKeyType == null;
   }
 
-  final List<PixKeyTypeOptionModel> pixKeyTypesOptions = pixKeyTypes();
+  final List<PixKeyTypeOptionModel> pixKeyTypesOptions = pixKeyTypes;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final String? userId = UserManager().userId;
 
@@ -126,8 +126,14 @@ class PixKeyFormPageController extends GetxController {
     filterController.clear();
   }
 
-  void bottomSheetSelectedKeyPixType(BuildContext context) {
-    _clearFilter();
+  void _unfocus() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  void bottomSheetSelectedPixKeyType(BuildContext context) async {
+    _unfocus();
+
+    await Future.delayed(const Duration(milliseconds: 200));
 
     Get.bottomSheet(
       isScrollControlled: true,
@@ -207,8 +213,11 @@ class PixKeyFormPageController extends GetxController {
     update();
   }
 
-  void bottomSheetSelectedParticipantPix(BuildContext context) {
+  void bottomSheetSelectedParticipantPix(BuildContext context) async {
     if (participantsPixBloc.state.participantsPix.isEmpty) return;
+
+    _unfocus();
+    await Future.delayed(const Duration(milliseconds: 200));
 
     Get.bottomSheet(
       isScrollControlled: true,

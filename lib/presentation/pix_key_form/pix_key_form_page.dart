@@ -76,7 +76,7 @@ class PixKeyFormPage extends StatelessWidget {
                             validator: (_) => ValidationPixKeyForm.validateKeyPixType(controller.selectedKeyPixType),
                             label: "Tipo de chave",
                             hintText: controller.selectedKeyPixType.label ?? "Selecione",
-                            onTap: isLoading ? null : () => controller.bottomSheetSelectedKeyPixType(context),
+                            onTap: isLoading ? null : () => controller.bottomSheetSelectedPixKeyType(context),
                             suffixIcon: const Icon(
                               Icons.expand_more,
                               size: 28,

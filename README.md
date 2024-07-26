@@ -1,10 +1,9 @@
 # Pix Keeper
 
-Pix Keeper é um aplicativo Flutter projetado para gerenciar chaves Pix, oferecendo recursos como criação, atualização e exclusão de chaves, além de autenticação e mais. Este README irá guiá-lo pela estrutura e arquitetura do projeto para ajudá-lo a entender como o aplicativo está organizado.
-
+Pix Keeper é um aplicativo simples desenvolvido em Flutter projetado para gerenciar chaves Pix, oferecendo recursos como criação, atualização e exclusão de chaves, além de autenticação e mais.
 ## Estrutura do Projeto
 
-O projeto é organizado de acordo com os princípios da Clean Architecture, que promove a separação de responsabilidades e a facilidade de manutenção. Abaixo está uma descrição da estrutura do projeto e o propósito de cada diretório.
+O projeto é organizado de acordo com os princípios da `Clean Architecture`, que promove a separação de responsabilidades e a facilidade de manutenção. Abaixo está uma descrição da estrutura do projeto e o propósito de cada diretório.
 
 ### lib/
 
@@ -12,7 +11,7 @@ O projeto é organizado de acordo com os princípios da Clean Architecture, que 
 Este é o ponto de entrada principal do aplicativo Flutter. Ele configura o GetMaterialApp e aplica o tema e a rota inicial.
 
 #### `lib/app_controller.dart`
-Contém o controlador principal da aplicação, responsável por gerenciar estados globais como o tema atual (modo claro ou escuro).
+Contém o controlador principal da aplicação, responsável por gerenciar estados globais como o tema atual (modo claro ou escuro) e etc.
 
 #### `lib/config/`
 Arquivos de configuração e definições para o aplicativo.
@@ -151,15 +150,19 @@ Este projeto segue os princípios da Clean Architecture, que divide a aplicaçã
 
 ### Pré-requisitos
 
-- Flutter SDK
-- Dart SDK
+- Flutter SDK - `v3.22.3`
+- Dart SDK - `v3.4.4`
+- Android Studio
+- Firebase CLI
+- Git
+- Visual Studio Code
 
 ### Instalação
 
 Clone o repositório:
 
 ```sh
-git clone https://github.com/your-repo/pix_keeper.git
+git clone https://github.com/adrianoqueirozdev/pix_keeper.git
 ```
 
 Navegue até o diretório do projeto:
@@ -199,6 +202,6 @@ Crie o arquivo `env.json` na raiz da aplicação e adicione as credenciais do Fi
 Execute o aplicativo em um dispositivo conectado ou emulador:
 
 ```sh
-flutter run
+flutter run --dart-define-from-file=env.json
 ```
 

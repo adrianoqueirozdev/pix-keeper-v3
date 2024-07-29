@@ -73,7 +73,7 @@ class PixKeysRepositoryImpl extends BaseRepository implements PixKeysRepository 
         .doc(userId)
         .collection(FirebaseCollections.pixKeys)
         .doc(id)
-        .update({'copiedAt': DateTime.now().toIso8601String()});
+        .update({PixKeysFields.copiedAt: DateTime.now().toIso8601String()});
   }
 
   @override

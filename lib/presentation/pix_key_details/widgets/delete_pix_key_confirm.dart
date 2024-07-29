@@ -25,7 +25,7 @@ class DeletePixKeyConfirm extends StatelessWidget {
             final isLoading = state is DeletePixKeyLoadingState;
 
             return ModalBottomSheetBase(
-              height: 256,
+              height: 250,
               title: "Apagar Chave",
               children: [
                 Padding(
@@ -41,7 +41,7 @@ class DeletePixKeyConfirm extends StatelessWidget {
                         onSecondaryAction: isLoading ? null : onCancel,
                         onPrimaryAction: isLoading ? null : onDeletePixKey,
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 18),
                     ],
                   ),
                 ),

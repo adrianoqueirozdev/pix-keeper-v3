@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pix_keeper/config/logger_config.dart';
 import 'package:pix_keeper/shared/constants/environment_variable_names.dart';
 
 void main() {
@@ -12,7 +11,5 @@ void main() {
     expect(EnvironmentVariableNames.firebaseMessagingSenderId, 'FIREBASE_MESSAGING_SENDER_ID');
     expect(EnvironmentVariableNames.firebaseProjectId, 'FIREBASE_PROJECT_ID');
     expect(EnvironmentVariableNames.firebaseStorageBucket, 'FIREBASE_STORAGE_BUCKET');
-
-    logger.d("environment_variable_names_test: [Environment variable names are correct]");
   });
 }

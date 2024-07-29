@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pix_keeper/config/logger_config.dart';
 import 'package:pix_keeper/core/data/models/info_bank_app_model.dart';
 import 'package:pix_keeper/shared/constants/app_images.dart';
 import 'package:pix_keeper/shared/utils/bank_apps.dart';
@@ -35,7 +34,5 @@ void main() {
       expect(bankApps[i].imagePath, equals(expectedBankApps[i].imagePath));
       expect(bankApps[i].packageName, equals(expectedBankApps[i].packageName));
     }
-
-    logger.d("bank_apps_test: [Bank apps are correct]");
   });
 }
